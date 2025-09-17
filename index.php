@@ -18,7 +18,6 @@
 
     <section class="years-section">
       <?php
-      require_once("year.php");
 
       $time_zone = new DateTimeZone('Europe/Berlin');
       $date = new DateTime('now', $time_zone);
@@ -33,7 +32,7 @@
 
       for ($year = 2015; $year <= $to_year; $year++) {
         $days = $year < $current_year ? 25 : $available_day;
-        echo get_year_container($year, $days);
+        require("year-container.php");
       }
       ?>
     </section>
