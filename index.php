@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="resources/icon.png" type=" image/png">
   <link rel="stylesheet" href="index.css">
+  <script src="script.js" defer></script>
   <title>Advent of Code Solutions</title>
 </head>
 
@@ -37,16 +38,6 @@
       ?>
     </section>
   </main>
-
-  <!-- TODO put in file and manage their visibilty on click -->
-  <script>
-    document.querySelectorAll(".days-container").forEach(el => {
-      el.classList.remove("hidden");
-    });
-    document.querySelectorAll(".year-button").forEach(el => {
-      el.classList.remove("rounded-edges");
-    });
-  </script>
 </body>
 
 </html>
