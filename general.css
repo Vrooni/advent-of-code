@@ -1,0 +1,28 @@
+body { 
+  padding: 3rem;
+  color: var(--white);
+  background-color: rgb(27, 31, 42);
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+
+  header {
+    margin-bottom: 2rem;
+  }
+  
+  main {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.red {
+  color: var(--red);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.green {
+  color: var(--green);
+}

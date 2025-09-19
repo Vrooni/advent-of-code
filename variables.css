@@ -1,0 +1,12 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --white: #e6d9d9;
+  --green: rgb(40, 180, 40);
+  --red: rgb(200, 53, 80);
+  --blue: rgb(117, 117, 255);
+}

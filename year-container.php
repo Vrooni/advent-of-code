@@ -1,12 +1,23 @@
+<?php
+$closed = "closed";
+$hidden = "hidden";
+
+if ($selected_year == $year) {
+  $closed = "";
+  $hidden = "";
+}
+?>
+
+<!-- TODO focus on opened year container -->
 <div class="year-container">
-  <button class="year-button closed" onclick="toggle(this)">
+  <button class="year-button <?php echo $closed ?>" onclick="toggle(this)">
     <?php echo $year; ?>
-    <img src="resources/chevron-up.svg" alt="chevron up icon">
+    <i class="fa-solid fa-chevron-down"></i>
   </button>
-  <div class="days-container hidden">
+  <div class="days-container <?php echo $hidden ?>">
     <div class="days-inner-container">
       <?php for ($day = 1; $day <= $days; $day++) {
-        require("days-container.php");
+        require("day-button.php");
       }
       ?>
     </div>
