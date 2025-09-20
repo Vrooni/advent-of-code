@@ -94,8 +94,7 @@ body main {
       }
 
       .closed {
-        /* TODO border-radius after close */
-        border-radius: 0.8rem;
+        animation: close 0.01s 0.4s ease-out forwards;
         
         i {
           transform: rotate(180deg);
@@ -106,5 +105,14 @@ body main {
         max-height: 0px;
       }
     }
+  }
+}
+
+@keyframes close {
+  from {
+    border-radius: 0rem;
+  }  
+  to {
+    border-radius: 0.8rem;
   }
 }
