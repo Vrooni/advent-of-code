@@ -1,12 +1,12 @@
 body { 
-  padding: 3rem;
+  padding: 3rem 0 3rem 0;
   color: var(--white);
   background-color: rgb(27, 31, 42);
   font-family: 'Courier New', Courier, monospace;
   text-align: center;
 
   header {
-    margin-bottom: 2rem;
+    padding-bottom: 2rem;
   }
   
   main {
