@@ -60,7 +60,7 @@ body main {
           .day-button {
             width: 100%;
             padding: 0.8rem;
-            color: var(--white);
+            color: rgb(129, 129, 129);
             background-color: rgb(74, 81, 110);
             font-family: inherit;
             font-size: 1rem;
@@ -76,20 +76,16 @@ body main {
             }
           }
 
-          form:nth-child(3n) .day-button {
+          form:nth-child(3n) .solution {
             color: var(--green);
           }
 
-          form:nth-child(3n + 1) .day-button {
+          form:nth-child(3n + 1) .solution {
             color: var(--red);
           }
 
-          form:nth-child(3n + 2) .day-button {
+          form:nth-child(3n + 2) .solution {
             color: var(--blue);
-          }
-
-          form:nth-child(2n) .day-button {
-            color: rgb(129, 129, 129);
           }
         }
       }
