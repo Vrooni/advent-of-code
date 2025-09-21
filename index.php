@@ -11,11 +11,11 @@ if (isset($_GET["year"])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link rel="shortcut icon" href="resources/icon.png" type=" image/png">
-  <link rel="stylesheet" href="variables.css">
-  <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="general.css">
-  <script src="script.js" defer></script>
+  <link rel="shortcut icon" href="frontend/resources/icon.png" type=" image/png">
+  <link rel="stylesheet" href="frontend/styling/variables.css">
+  <link rel="stylesheet" href="frontend/styling/index.css">
+  <link rel="stylesheet" href="frontend/styling/general.css">
+  <script src="frontend/scripts/script.js" defer></script>
   <title>Advent of Code Solutions</title>
 </head>
 
@@ -47,7 +47,7 @@ if (isset($_GET["year"])) {
 
       for ($year = 2015; $year <= $to_year; $year++) {
         $days = $year < $current_year ? 25 : $available_day;
-        require("year-container.php");
+        require("frontend/components/year-container.php");
       }
       ?>
     </section>

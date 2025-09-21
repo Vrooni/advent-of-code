@@ -75,10 +75,10 @@ function validate_input()
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link rel="shortcut icon" href="resources/icon.png" type=" image/png">
-  <link rel="stylesheet" href="variables.css">
-  <link rel="stylesheet" href="solution.css">
-  <link rel="stylesheet" href="general.css">
+  <link rel="shortcut icon" href="../styling/icon.png" type=" image/png">
+  <link rel="stylesheet" href="../styling/variables.css">
+  <link rel="stylesheet" href="../styling/solution.css">
+  <link rel="stylesheet" href="../styling/general.css">
   <title> <?php echo "AOC $selected_year - Day $selected_day"; ?></title>
 </head>
 
