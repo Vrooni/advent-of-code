@@ -1,8 +1,8 @@
 <?php
 $solution_exists =
   file_exists("backend/solutions/java-solutions/year$year/Day$day.java") ||
-  file_exists("backend/solutions/java-solutions/year$year/Da" . $day . "_1.java") ||
-  file_exists("backend/solutions/java-solutions/year$year/Da" . $day . "_2.java") ||
+  file_exists("backend/solutions/java-solutions/year$year/Day" . $day . "_1.java") ||
+  file_exists("backend/solutions/java-solutions/year$year/Day" . $day . "_2.java") ||
   file_exists("backend/solutions/php-solutions/year$year/Day$day.php");
 ?>
 

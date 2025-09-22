@@ -66,6 +66,17 @@ function validate_input()
   }
 }
 
+function get_solution($year, $day)
+{
+  $path_to_solutions = "../../backend/solutions";
+
+  return
+    file_exists("$path_to_solutions/java-solutions/year$year/Day$day.java") ||
+    file_exists("$path_to_solutions/solutions/java-solutions/year$year$day/Day" . $day . "_1.java") ||
+    file_exists("$path_to_solutions/solutions/java-solutions/year$year/Day" . $day . "_2.java") ||
+    file_exists("$path_to_solutions/solutions/php-solutions/year$year/Day$year.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +90,9 @@ function validate_input()
   <link rel="stylesheet" href="../styling/variables.css">
   <link rel="stylesheet" href="../styling/solution.css">
   <link rel="stylesheet" href="../styling/general.css">
+  <link rel="stylesheet" href="../styling/prism.css">
   <title> <?php echo "AOC $selected_year - Day $selected_day"; ?></title>
+  <script src="../scripts/prism.js" defer></script>
 </head>
 
 <body>
@@ -137,38 +150,13 @@ function validate_input()
   </header>
 
   <main>
-    <div class="cards-container">
-      <div class="card-container">
-        <form action="" method="post">
-          <p>Enter your input:</p>
-          <textarea class="textarea" name="" id=""></textarea>
-
-          <div class="buttons">
-            <a class="btn secondary" href="<?php echo "https://adventofcode.com/$selected_year/day/$selected_day" ?>" target="_blank" rel="noopener noreferrer">
-              Problem
-            </a>
-            <button class="btn primary" type="submit">Solve</button>
-          </div>
-        </form>
-      </div>
-
-      <div class="output-container">
-        <div class="card-container output">
-          <p class="part-title">Part 1:</p>
-          <p>Safljwelgkwjel</p>
-        </div>
-
-        <div class="card-container output">
-          <p class="part-title">Part 2:</p>
-          <p>Safljwelgkwjel</p>
-        </div>
-      </div>
-
-      <div class="card-container solution">
-        <h2>Solution</h2>
-        <textarea class="textarea">
-        </textarea>
-      </div>
+    <?php
+    if (get_solution($selected_year, $selected_day)) {
+      require_once("../components/solution-cards-container.php");
+    } else {
+      require_once("../components/solution-sad-reindeer.php");
+    }
+    ?>
   </main>
 </body>
 
