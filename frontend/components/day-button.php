@@ -1,9 +1,9 @@
 <?php
 $solution_exists =
-  file_exists("backend/solutions/java-solutions/year$year/Day$day.java") ||
-  file_exists("backend/solutions/java-solutions/year$year/Day" . $day . "_1.java") ||
-  file_exists("backend/solutions/java-solutions/year$year/Day" . $day . "_2.java") ||
-  file_exists("backend/solutions/php-solutions/year$year/Day$day.php");
+  file_exists("backend/solutions/java-solutions/year$year/Day" . $day . "_1.class") &&
+  file_exists("backend/solutions/java-solutions/year$year/Day" . $day . "_2.class") ||
+  file_exists("backend/solutions/php-solutions/year$year/Day" . $day . "_1.php") &&
+  file_exists("backend/solutions/php-solutions/year$year/Day" . $day . "_2.php");
 ?>
 
 

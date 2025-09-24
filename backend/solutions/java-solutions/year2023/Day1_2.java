@@ -1,32 +1,12 @@
-package year2023;
-
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day1 {
+public class Day1_2 {
 
-    public static void main(String[] args) throws IOException {
-        //Part one
-        List<String> lines = Utils.readLines(Path.of("src/year2023/files/01.txt"));
+    public static void main(String[] args) {
         int sum = 0;
 
-        for (String line : lines) {
-            line = line.replaceAll("[^0-9]", "");
-            int n = line.length();
-
-            String stringNumber = line.charAt(0) + line.substring(n - 1);
-            sum += Integer.parseInt(stringNumber);
-        }
-
-        System.out.println(sum);
-
-
-        //Part two
-        sum = 0;
-
-        for (String line : lines) {
+        for (String line : args) {
             List<Integer> numbers = new ArrayList<>();
 
             for (int i = 0; i < line.length(); i++) {
@@ -49,7 +29,7 @@ public class Day1 {
 
     private static void addNumber(List<Integer> numbers, String s, int start, int end, String toReplace, int replacement) {
         String number = s.substring(start, start+1);
-        if (Utils.isNumeric(number)) {
+        if (isNumeric(number)) {
             numbers.add(Integer.valueOf(number));
             return;
         }
@@ -60,6 +40,15 @@ public class Day1 {
 
         if (s.substring(start, end).equals(toReplace)) {
             numbers.add(replacement);
+        }
+    }
+
+    private static boolean isNumeric(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 }

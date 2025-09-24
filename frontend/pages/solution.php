@@ -66,15 +66,14 @@ function validate_input()
   }
 }
 
-function get_solution($year, $day)
+function solution_exists($year, $day)
 {
-  $path_to_solutions = "../../backend/solutions";
-
+  $path_to_solution = "../../backend/solutions/";
   return
-    file_exists("$path_to_solutions/java-solutions/year$year/Day$day.java") ||
-    file_exists("$path_to_solutions/solutions/java-solutions/year$year$day/Day" . $day . "_1.java") ||
-    file_exists("$path_to_solutions/solutions/java-solutions/year$year/Day" . $day . "_2.java") ||
-    file_exists("$path_to_solutions/solutions/php-solutions/year$year/Day$year.php");
+    file_exists("$path_to_solution/java-solutions/year$year/Day" . $day . "_1.class") &&
+    file_exists("$path_to_solution/java-solutions/year$year/Day" . $day . "_2.class") ||
+    file_exists("$path_to_solution/php-solutions/year$year/Day" . $day . "_1.php") &&
+    file_exists("$path_to_solution/php-solutions/year$year/Day" . $day . "_2.php");
 }
 
 ?>
@@ -86,34 +85,36 @@ function get_solution($year, $day)
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link rel="shortcut icon" href="../styling/icon.png" type=" image/png">
+  <link rel="shortcut icon" href="../resources/icon.png" type=" image/png">
   <link rel="stylesheet" href="../styling/variables.css">
   <link rel="stylesheet" href="../styling/solution.css">
   <link rel="stylesheet" href="../styling/general.css">
   <link rel="stylesheet" href="../styling/prism.css">
   <title> <?php echo "AOC $selected_year - Day $selected_day"; ?></title>
   <script src="../scripts/prism.js" defer></script>
+  <script src="../scripts/copy-to-clipboard.js" defer></script>
 </head>
 
 <body>
   <header>
     <nav>
-      <a class="green" href="/advent-of-code">
+      <a class="green clickable" href="/advent-of-code">
         Home
       </a>
 
       <i class="fa-solid fa-chevron-right"></i>
-      <a class="red" href=<?php echo "/advent-of-code?year=$selected_year" ?>>
+      <a class="red clickable" href=<?php echo "/advent-of-code?year=$selected_year" ?>>
         <?php echo $selected_year; ?>
       </a>
 
       <i class="fa-solid fa-chevron-right"></i>
-      <a class="red">
+      <p class="red">
         <span class="blue">Day</span>
         <?php echo " $selected_day"; ?>
-      </a>
+      </p>
     </nav>
 
+    <!-- TODO responsiveness -->
     <section class="title-section">
       <form action="solution.php" method="post">
         <button
@@ -151,7 +152,7 @@ function get_solution($year, $day)
 
   <main>
     <?php
-    if (get_solution($selected_year, $selected_day)) {
+    if (solution_exists($selected_year, $selected_day)) {
       require_once("../components/solution-cards-container.php");
     } else {
       require_once("../components/solution-sad-reindeer.php");

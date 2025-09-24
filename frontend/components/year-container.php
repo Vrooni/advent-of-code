@@ -8,7 +8,6 @@ if ($selected_year == $year) {
 }
 ?>
 
-<!-- TODO focus on opened year container -->
 <div class="year-container">
   <button class="year-button <?php echo $closed ?>" onclick="toggle(this)">
     <?php echo $year; ?>

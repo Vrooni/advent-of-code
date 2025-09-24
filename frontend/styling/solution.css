@@ -69,13 +69,16 @@ body {
         cursor: pointer;
         text-decoration: none;
         transition: all 0.2s;
-        box-sizing: content-box;
         border-bottom: 1px solid transparent;
 
         &:hover {
-          transform: translateY(-2px);
-          border-bottom: 1px solid white;
+        transform: translateY(-2px);
+        border-bottom: 1px solid white;
         }
+      }
+
+      p {
+        border-bottom: 1px solid transparent;
       }
 
       i { 
@@ -174,14 +177,56 @@ body {
         gap: 1rem;
 
         .output {
+          cursor: copy;
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
           width: 100%;
+          border: 1px solid transparent;
+          position: relative;
 
           .part-title {
             color: var(--green);
           }
+        }
+
+        .success {
+          border: 1px solid var(--green);
+          background-color: rgba(37, 234, 99, 0.2);
+        }
+
+        .error {
+          border: 1px solid var(--red);
+          background-color: rgba(234, 37, 37, 0.2);
+        }
+
+        .info {
+          visibility: hidden;
+          width: 120px;
+          background-color: black;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+          top: 120%;
+          left: 50%;
+          margin-left: -60px;
+        }
+
+        .info::after {
+          content: "";
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          margin-left: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: transparent transparent black transparent;
+        }
+
+        .output:hover .info {
+          visibility: visible;
         }
       }
     }
@@ -201,11 +246,17 @@ body {
       h3 {
         margin-top: 1.5rem;
       }
+
+      h4 {
+        margin-top: 0.5rem;
+      }
       .textarea {
         font-size: 0.8rem;
         width: 90%;
         max-width: 60rem;
-        height: 40rem;
+        height: 20rem;
+        border: none;
+        background-color: rgb(42, 47, 63);
       }
     }
   }

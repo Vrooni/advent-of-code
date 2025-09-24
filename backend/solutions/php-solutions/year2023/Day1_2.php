@@ -1,26 +1,4 @@
 <?php
-// Part one
-$input = file("files/01.txt", FILE_IGNORE_NEW_LINES);
-$result = 0;
-
-foreach ($input as $line) {
-  $line_chars = str_split($line);
-  $numbers = [];
-
-  foreach ($line_chars as $char) {
-    if (is_numeric($char)) {
-      $numbers[] = $char;
-    }
-  }
-
-  $number = $numbers[0] . end($numbers);
-  $result += $number;
-}
-
-echo $result . "<br>";
-
-
-// Part two
 $result = 0;
 $numbers_map = [
   "one" => 1,
@@ -62,4 +40,4 @@ foreach ($input as $line) {
   $result += $number;
 }
 
-echo $result . "<br>";
+return $result;

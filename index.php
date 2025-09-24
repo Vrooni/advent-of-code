@@ -1,4 +1,6 @@
 <?php
+
+// TODO all solution files has to be splitted into part 1 and 2. Good luck, have fun to me!
 if (isset($_GET["year"])) {
   $selected_year = $_GET["year"];
 }
@@ -15,7 +17,7 @@ if (isset($_GET["year"])) {
   <link rel="stylesheet" href="frontend/styling/variables.css">
   <link rel="stylesheet" href="frontend/styling/index.css">
   <link rel="stylesheet" href="frontend/styling/general.css">
-  <script src="frontend/scripts/script.js" defer></script>
+  <script src="frontend/scripts/year-and-day-buttons.js" defer></script>
   <title>Advent of Code Solutions</title>
 </head>
 
