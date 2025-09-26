@@ -1,0 +1,107 @@
+body main {
+  padding-top: 2rem;
+  
+  .sad-reindeer {
+    height: 30rem;
+  }
+
+  .excuse {
+    color: var(--red);
+    margin-top: 3rem;
+  }
+
+  .cards-container {
+    width: 90%;
+    max-width: 45rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .card-container {
+      padding: 1rem;
+      color: var(--white);
+      background-color: rgb(42, 47, 63);
+      border-radius: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+
+        p {
+          font-size: 1.1rem;
+        }
+
+        .buttons {
+          display: flex;
+          gap: 1rem;
+        }
+      }
+    }
+
+    .output-container {
+      display: flex;
+      gap: 1rem;
+
+      .output {
+        cursor: copy;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        border: 1px solid transparent;
+        position: relative;
+
+        .part-title {
+          color: var(--green);
+        }
+      }
+
+      .success {
+        border: 1px solid var(--green);
+        background-color: rgba(37, 234, 99, 0.2);
+      }
+
+      .error {
+        border: 1px solid var(--red);
+        background-color: rgba(234, 37, 37, 0.2);
+      }
+
+      .info {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        top: 120%;
+        left: 50%;
+        margin-left: -60px;
+      }
+
+      .info::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent black transparent;
+      }
+
+      .output:hover .info {
+        visibility: visible;
+      }
+    }
+  }
+}

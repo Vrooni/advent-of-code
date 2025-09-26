@@ -101,8 +101,21 @@ function get_solution($input, $day, $part)
 
 <div class="solution-container">
   <h2>Code Solution</h2>
-  <!-- TODO make pages for java and php and for parts?? -->
-  <!-- TODO make the files be able to download?? -->
+  <!-- TODO switch pages and parts -->
+  <div class="lang-container">
+    <!-- <button> -->
+    <i class="fa-solid fa-chevron-left prev"></i>
+    <!-- </button> -->
+    <h3 class="red">PHP</h3>
+    <!-- <button> -->
+    <i class="fa-solid fa-chevron-right next"></i>
+    <!-- </button> -->
+  </div>
+  <div class="tag-container">
+    <img class="one-tag active" src="../resources/tag-one.svg" alt="one tag" onclick=selectDayOne(this)>
+    <img class="two-tag" src="../resources/tag-two.svg" alt="two tag" onclick=selectDayTwo(this)>
+  </div>
+
   <?php
   if (
     file_exists("$path_to_php_code/Day$selected_day" . "_1.php") &&

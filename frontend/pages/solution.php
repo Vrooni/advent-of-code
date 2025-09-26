@@ -87,12 +87,15 @@ function solution_exists($year, $day)
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="../resources/icon.png" type=" image/png">
   <link rel="stylesheet" href="../styling/variables.css">
-  <link rel="stylesheet" href="../styling/solution.css">
+  <link rel="stylesheet" href="../styling/solution-nav.css">
+  <link rel="stylesheet" href="../styling/solution-input.css">
+  <link rel="stylesheet" href="../styling/solution-code.css">
   <link rel="stylesheet" href="../styling/general.css">
   <link rel="stylesheet" href="../styling/prism.css">
   <title> <?php echo "AOC $selected_year - Day $selected_day"; ?></title>
   <script src="../scripts/prism.js" defer></script>
   <script src="../scripts/copy-to-clipboard.js" defer></script>
+  <script src="../scripts/day-selection.js" defer></script>
 </head>
 
 <body>

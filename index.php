@@ -1,6 +1,7 @@
 <?php
 
 // TODO all solution files has to be splitted into part 1 and 2. Good luck, have fun to me!
+// TODO add snowflakes to background
 if (isset($_GET["year"])) {
   $selected_year = $_GET["year"];
 }
