@@ -12,7 +12,7 @@ window.addEventListener("DOMContentLoaded", () => {
   if (part) {
     if (part.classList.contains("one-tag")) {
       selectPartOne(part);
-    } else if (activeEl.classList.contains("two-tag")) {
+    } else if (part.classList.contains("two-tag")) {
       selectPartTwo(part);
     }
   }

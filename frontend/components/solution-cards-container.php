@@ -32,8 +32,7 @@ $text = $_SESSION["text"];
 $input = preg_split("/\r\n|\n|\r/", trim($text));
 
 $code_solution_language = $_SESSION["lang"] ?? $code_solutions[0] ?? "";
-
-$code_solution_part = 1;
+$code_solution_part = $_SESSION["part"] ?? 1;
 
 $solution_part_1 = get_solution($input, $selected_day, 1);
 $solution_part_2 = get_solution($input, $selected_day, 2);
@@ -155,12 +154,10 @@ function get_solution($input, $day, $part)
   }
   ?>
 
-
   <form class="tag-container">
-    <img class="one-tag active" src="../resources/tag-one.svg" alt="one tag" onclick=selectPartOne(this)>
-    <img class="two-tag" src="../resources/tag-two.svg" alt="two tag" onclick=selectPartTwo(this)>
+    <img class="one-tag <?php echo $code_solution_part == 1 ? "active" : ""; ?>" src="../resources/tag-one.svg" alt="one tag" onclick=selectPartOne(this)>
+    <img class="two-tag <?php echo $code_solution_part == 2 ? "active" : ""; ?>" src="../resources/tag-two.svg" alt="two tag" onclick=selectPartTwo(this)>
   </form>
-
 
   <pre id="code-container" class="textarea">
   </pre>
