@@ -5,13 +5,39 @@ $solution_part_2 = null;
 $path_to_php_code = "../../backend/solutions/php-solutions/year$selected_year";
 $path_to_java_code = "../../backend/solutions/java-solutions/year$selected_year";
 
-if (isset($_POST["input"])) {
-  $text = $_POST["input"];
-  $input = preg_split("/\r\n|\n|\r/", trim($text));
+$php_code_exists =
+  file_exists("$path_to_php_code/Day$selected_day" . "_1.php") &&
+  file_exists("$path_to_php_code/Day$selected_day" . "_2.php");
+$java_code_exists =
+  file_exists("$path_to_java_code/Day$selected_day" . "_1.java") &&
+  file_exists("$path_to_java_code/Day$selected_day" . "_2.java");
 
-  $solution_part_1 = get_solution($input, $selected_day, 1);
-  $solution_part_2 = get_solution($input, $selected_day, 2);
+$code_solutions = [];
+if ($php_code_exists) {
+  $code_solutions[] = "PHP";
 }
+if ($java_code_exists) {
+  $code_solutions[] = "Java";
+}
+
+if (isset($_POST["lang"])) {
+  $_SESSION["lang"] = $_POST["lang"];
+}
+
+if (isset($_POST["input"])) {
+  $_SESSION["text"] = $_POST["input"];
+}
+
+$text = $_SESSION["text"];
+$input = preg_split("/\r\n|\n|\r/", trim($text));
+
+$code_solution_language = $_SESSION["lang"] ?? $code_solutions[0] ?? "";
+
+$code_solution_part = 1;
+
+$solution_part_1 = get_solution($input, $selected_day, 1);
+$solution_part_2 = get_solution($input, $selected_day, 2);
+
 
 function get_solution($input, $day, $part)
 {
@@ -51,7 +77,7 @@ function get_solution($input, $day, $part)
 
 <div class="cards-container">
   <div class="card-container">
-    <form method="post">
+    <form id="input-form" method="post">
       <p>Enter your input:</p>
       <textarea class="textarea" name="input"><?php echo $text; ?></textarea>
 
@@ -62,7 +88,7 @@ function get_solution($input, $day, $part)
           rel="noopener noreferrer">
           Problem
         </a>
-        <button class="btn primary" type="submit" name="day-and-year" value="<?php echo "$selected_day:$selected_year" ?>">Solve</button>
+        <button class="btn primary" type="submit">Solve</button>
       </div>
     </form>
   </div>
@@ -70,7 +96,7 @@ function get_solution($input, $day, $part)
   <div class="output-container">
     <div onclick="copyToClipboard(this)" class="card-container output <?php echo isset($solution_part_1) ? $solution_part_1[0] : ""; ?> ">
       <p class="part-title">Part 1</p>
-      <p class="part-solution"">
+      <p class="part-solution">
         <?php
         if (isset($solution_part_1)) {
           echo $solution_part_1[1];
@@ -101,34 +127,41 @@ function get_solution($input, $day, $part)
 
 <div class="solution-container">
   <h2>Code Solution</h2>
-  <!-- TODO switch pages and parts -->
-  <div class="lang-container">
-    <!-- <button> -->
-    <i class="fa-solid fa-chevron-left prev"></i>
-    <!-- </button> -->
-    <h3 class="red">PHP</h3>
-    <!-- <button> -->
-    <i class="fa-solid fa-chevron-right next"></i>
-    <!-- </button> -->
-  </div>
-  <div class="tag-container">
-    <img class="one-tag active" src="../resources/tag-one.svg" alt="one tag" onclick=selectDayOne(this)>
-    <img class="two-tag" src="../resources/tag-two.svg" alt="two tag" onclick=selectDayTwo(this)>
-  </div>
-
   <?php
-  if (
-    file_exists("$path_to_php_code/Day$selected_day" . "_1.php") &&
-    file_exists("$path_to_php_code/Day$selected_day" . "_2.php")
-  ) {
-    require("../components/solution-php.php");
-  }
+  if (sizeof($code_solutions) > 1) {
+  ?>
+    <form class="lang-container" action="solution.php" method="post">
+      <button class="prev" type="submit" name="lang" value="<?php echo $code_solution_language === "PHP" ? "Java" : "PHP" ?>">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
 
-  if (
-    file_exists("$path_to_java_code/Day$selected_day" . "_1.java") &&
-    file_exists("$path_to_java_code/Day$selected_day" . "_2.java")
-  ) {
-    require("../components/solution-java.php");
+      <h3 id="code-lang" class="red">
+        <?php echo $code_solution_language; ?>
+      </h3>
+
+      <button class="next" type="submit" name="lang" value="<?php echo $code_solution_language === "PHP" ? "Java" : "PHP" ?>">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </form>
+  <?php
+  } else {
+  ?>
+    <div class="lang-container">
+      <h3 id="code-lang" class="red">
+        <?php echo $code_solution_language; ?>
+      </h3>
+    </div>
+  <?php
   }
   ?>
+
+
+  <form class="tag-container">
+    <img class="one-tag active" src="../resources/tag-one.svg" alt="one tag" onclick=selectPartOne(this)>
+    <img class="two-tag" src="../resources/tag-two.svg" alt="two tag" onclick=selectPartTwo(this)>
+  </form>
+
+
+  <pre id="code-container" class="textarea">
+  </pre>
 </div>

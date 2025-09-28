@@ -14,24 +14,31 @@ body main {
       margin-bottom: 2rem;
       align-items: center;
 
-      .prev {
-        cursor: pointer;
+      button {
+        border: none;
+        background-color: transparent;
         padding: 0.2rem 1rem;
-        transition: all 0.2s ease;
+        position: relative;
+        cursor: pointer;
+        font-family: inherit;
+        color: inherit;
+        font-size: 1rem;
         z-index: 100;
-        &:hover {
-          transform: translateX(-5px);
-        }
 
+        i {
+          transition: all 0.2s ease;
+        }
       }
 
-      .next {
-        cursor: pointer;
-        padding: 0.2rem 1rem;
-        transition: all 0.2s ease;
-        z-index: 100;
-        &:hover {
-          transform: translateX(5px);
+      .prev:hover {
+        i {
+        transform: translateX(-5px);
+        }
+      }
+
+      .next:hover {
+        i {
+        transform: translateX(5px);
         }
       }
     }

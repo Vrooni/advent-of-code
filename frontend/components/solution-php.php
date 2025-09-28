@@ -1,7 +1,11 @@
-<h3 class="red">PHP</h3>
+<?php
+session_start();
+$selected_day = $_SESSION["selected_day"];
+$selected_year = $_SESSION["selected_year"];
 
-<h4>Part one</h4>
-<pre class="textarea"><code class="language-php"><?php echo htmlspecialchars(file_get_contents($path_to_php_code . "/Day$selected_day" . "_1.php")); ?></code></pre>
+$part = $_GET["part"] ?? "1";
+$_SESSION["part"] = $part;
 
-<h4>Part two</h4>
-<pre class="textarea"><code class="language-php"><?php echo htmlspecialchars(file_get_contents($path_to_php_code . "/Day$selected_day" . "_2.php")); ?></code></pre>
+$path_to_php_code = "../../backend/solutions/php-solutions/year$selected_year/Day$selected_day" . "_$part.php";
+?>
+<code class="language-php"><?php echo htmlspecialchars(file_get_contents($path_to_php_code)); ?></code>

@@ -4,6 +4,8 @@ $classes_next = "next";
 $disabled_prev = "";
 $disabled_next = "";
 
+session_start();
+
 if (isset($_POST["day-and-year"])) {
   $day_year = explode(":", $_POST["day-and-year"]);
   $selected_day = $day_year[0];
@@ -11,35 +13,42 @@ if (isset($_POST["day-and-year"])) {
 
   validate_input();
 
-  $prev_day = $selected_day - 1;
-  $next_day = $selected_day + 1;
-  $prev_year = $selected_year;
-  $next_year = $selected_year;
-
-  if ($next_day >= 26) {
-    $next_day = 1;
-    $next_year++;
-  }
-
-  if ($prev_day <= 0) {
-    $prev_day = 25;
-    $prev_year--;
-  }
-
-  if ($selected_year <= 2015 && $selected_day <= 1) {
-    $classes_prev = "disabled";
-    $disabled_prev = "disabled";
-  }
-
-  $time_zone = new DateTimeZone('Europe/Berlin');
-  $date = new DateTime('now', $time_zone);
-  $next_date = new DateTime("$next_year-12-$next_day 06:00:00", $time_zone);
-
-  if ($next_date > $date) {
-    $classes_next = "disabled";
-    $disabled_next = "disabled";
-  }
+  $_SESSION["selected_day"] = $selected_day;
+  $_SESSION["selected_year"] = $selected_year;
 }
+
+$selected_day = $_SESSION["selected_day"];
+$selected_year = $_SESSION["selected_year"];
+
+$prev_day = $selected_day - 1;
+$next_day = $selected_day + 1;
+$prev_year = $selected_year;
+$next_year = $selected_year;
+
+if ($next_day >= 26) {
+  $next_day = 1;
+  $next_year++;
+}
+
+if ($prev_day <= 0) {
+  $prev_day = 25;
+  $prev_year--;
+}
+
+if ($selected_year <= 2015 && $selected_day <= 1) {
+  $classes_prev = "disabled";
+  $disabled_prev = "disabled";
+}
+
+$time_zone = new DateTimeZone('Europe/Berlin');
+$date = new DateTime('now', $time_zone);
+$next_date = new DateTime("$next_year-12-$next_day 06:00:00", $time_zone);
+
+if ($next_date > $date) {
+  $classes_next = "disabled";
+  $disabled_next = "disabled";
+}
+
 
 function validate_input()
 {
@@ -95,7 +104,7 @@ function solution_exists($year, $day)
   <title> <?php echo "AOC $selected_year - Day $selected_day"; ?></title>
   <script src="../scripts/prism.js" defer></script>
   <script src="../scripts/copy-to-clipboard.js" defer></script>
-  <script src="../scripts/day-selection.js" defer></script>
+  <script src="../scripts/part-selection.js" defer></script>
 </head>
 
 <body>
