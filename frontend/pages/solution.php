@@ -126,7 +126,6 @@ function solution_exists($year, $day)
       </p>
     </nav>
 
-    <!-- TODO responsiveness -->
     <section class="title-section">
       <form action="solution.php" method="post">
         <button

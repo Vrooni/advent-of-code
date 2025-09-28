@@ -31,12 +31,21 @@ body {
     }
 
     .title-section {
-      display: flex;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-areas: "prev title next";
       align-items: center;
       gap: 1.5rem;
 
+      h1 {
+        justify-self: center;
+        grid-area: title;
+      }
+
       .prev {
+        justify-self: end;
+        grid-area: prev;
+
         &:hover {
           i {
             transform: translateX(-5px);
@@ -45,6 +54,9 @@ body {
       }
 
       .next {
+        justify-self: start;
+        grid-area: next;
+
         &:hover {
           i {
             transform: translateX(5px);
@@ -66,5 +78,12 @@ body {
         }
       }
     }
+  }
+}
+
+@media (max-width: 500px) {
+  body header .title-section {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "prev next" "title title";
   }
 }
