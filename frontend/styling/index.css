@@ -25,6 +25,7 @@ body main {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        transition: border-radius 0s 0s ease-out;
 
         i {
           width: 1.1rem;
@@ -90,8 +91,9 @@ body main {
         }
       }
 
-      .closed {
-        animation: close 0.01s 0.4s ease-out forwards;
+      .year-button.closed {
+        border-radius: 0.8rem;
+        transition: border-radius 0.01s 0.4s ease-out;
         
         i {
           transform: rotate(0deg);
@@ -102,14 +104,5 @@ body main {
         max-height: 0px;
       }
     }
-  }
-}
-
-@keyframes close {
-  from {
-    border-radius: 0rem;
-  }  
-  to {
-    border-radius: 0.8rem;
   }
 }
