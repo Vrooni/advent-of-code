@@ -42,24 +42,29 @@ body {
         grid-area: title;
       }
 
-      .prev {
+      .prev-form {
         justify-self: end;
         grid-area: prev;
 
-        &:hover {
-          i {
-            transform: translateX(-5px);
+        .prev {
+          &:hover {
+            i {
+              transform: translateX(-5px);
+            }
           }
         }
       }
 
-      .next {
+      .next-form {
         justify-self: start;
         grid-area: next;
 
-        &:hover {
-          i {
-            transform: translateX(5px);
+        .next {
+
+          &:hover {
+            i {
+              transform: translateX(5px);
+            }
           }
         }
       }

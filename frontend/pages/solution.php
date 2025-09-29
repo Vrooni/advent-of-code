@@ -127,7 +127,7 @@ function solution_exists($year, $day)
     </nav>
 
     <section class="title-section">
-      <form action="solution.php" method="post">
+      <form class="prev-form" action="solution.php" method="post">
         <button
           class="<?php echo $classes_prev ?> btn secondary"
           type="submit"
@@ -147,7 +147,7 @@ function solution_exists($year, $day)
         <span class="green">Solution</span>
       </h1>
 
-      <form action="solution.php" method="post">
+      <form class="next-form" action="solution.php" method="post">
         <button
           class="<?php echo $classes_next ?> btn secondary"
           type="submit"
