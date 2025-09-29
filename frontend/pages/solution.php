@@ -105,9 +105,14 @@ function solution_exists($year, $day)
   <script src="../scripts/prism.js" defer></script>
   <script src="../scripts/copy-to-clipboard.js" defer></script>
   <script src="../scripts/part-selection.js" defer></script>
+  <script src="../scripts/lights.js" defer></script>
 </head>
 
 <body>
+  <?php
+  require_once("../components/lights.php");
+  ?>
+
   <header>
     <nav>
       <a class="green clickable" href="/advent-of-code">

@@ -19,10 +19,14 @@ if (isset($_GET["year"])) {
   <link rel="stylesheet" href="frontend/styling/index.css">
   <link rel="stylesheet" href="frontend/styling/general.css">
   <script src="frontend/scripts/year-and-day-buttons.js" defer></script>
+  <script src="frontend/scripts/lights.js" defer></script>
   <title>Advent of Code Solutions</title>
 </head>
 
 <body>
+  <?php
+  require_once("frontend/components/lights.php");
+  ?>
   <header>
     <h1>
       <span class="green">Advent</span>

@@ -83,3 +83,34 @@ body {
   border: 1px solid var(--blue);
   border-radius: 0.3rem;
 }
+
+
+.lights {
+  z-index: -1;
+  min-width: 100%;
+  width: 1600px;
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translatex(-50%);
+  
+  .stroke {
+    fill: none;
+    stroke: rgba(86, 86, 19, 0.5);
+    stroke-width: 2;
+  }
+
+  .light {
+    fill: rgb(255, 234, 130);
+    filter: drop-shadow(0 0 6px rgb(255, 234, 130)) drop-shadow(0 0 15px #ffea82);
+  }
+}
+
+@keyframes glimmer {
+ 0% {
+  opacity: 0.5;
+ }
+ 100% {
+  opacity: 1;
+ }
+}
