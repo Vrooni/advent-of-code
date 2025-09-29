@@ -66,12 +66,12 @@ body main {
 
       .success {
         border: 1px solid var(--green);
-        background-color: rgba(37, 234, 99, 0.2);
+        background-color: rgb(29, 72, 53);
       }
 
       .error {
         border: 1px solid var(--red);
-        background-color: rgba(234, 37, 37, 0.2);
+        background-color: rgb(71, 32, 41);
       }
 
       .info {

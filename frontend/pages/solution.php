@@ -13,6 +13,7 @@ if (isset($_POST["day-and-year"])) {
 
   validate_input();
 
+  session_unset();
   $_SESSION["selected_day"] = $selected_day;
   $_SESSION["selected_year"] = $selected_year;
 }

@@ -14,20 +14,28 @@ function addLights(svg, id) {
     const point = stroke.getPointAtLength(pos);
     const xOffset = (Math.random() - 0.5) * 20;
     const yOffset = (Math.random() - 0.5) * 30;
+    const radius = 2 + Math.random() * 2
+    const delay = (Math.random() * 2) + "s";
+
+    const shadow = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+    shadow.setAttribute("class", "shadow");
+    shadow.setAttribute("cx", point.x + xOffset);
+    shadow.setAttribute("cy", point.y + yOffset);
+    shadow.setAttribute("r", radius + 1);
 
     const light = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
     light.setAttribute("class", "light");
     light.setAttribute("cx", point.x + xOffset);
     light.setAttribute("cy", point.y + yOffset);
-    light.setAttribute("r", 2 + Math.random() * 2);
+    light.setAttribute("r", radius);
     
-    // TODO don't use svgs!!!
-    // only animate 10%
-    if (Math.random() < 0.1) {
-      // light.style.animation = "glimmer 1.5s infinite alternate";
-      // light.style.animationDelay = (Math.random() * 2) + "s";
-    }
+    shadow.style.animation = "glimmer 1.5s infinite alternate";
+    shadow.style.animationDelay = delay;
 
+    light.style.animation = "glimmer 1.5s infinite alternate";
+    light.style.animationDelay = delay;
+
+    svg.appendChild(shadow);
     svg.appendChild(light);
   }
 }

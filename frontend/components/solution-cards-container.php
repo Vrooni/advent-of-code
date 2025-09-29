@@ -16,6 +16,7 @@ $code_solutions = [];
 if ($php_code_exists) {
   $code_solutions[] = "PHP";
 }
+
 if ($java_code_exists) {
   $code_solutions[] = "Java";
 }
@@ -34,9 +35,10 @@ $input = preg_split("/\r\n|\n|\r/", trim($text));
 $code_solution_language = $_SESSION["lang"] ?? $code_solutions[0] ?? "";
 $code_solution_part = $_SESSION["part"] ?? 1;
 
-$solution_part_1 = get_solution($input, $selected_day, 1);
-$solution_part_2 = get_solution($input, $selected_day, 2);
-
+if ($text) {
+  $solution_part_1 = get_solution($input, $selected_day, 1);
+  $solution_part_2 = get_solution($input, $selected_day, 2);
+}
 
 function get_solution($input, $day, $part)
 {

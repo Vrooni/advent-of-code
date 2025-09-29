@@ -102,13 +102,17 @@ body {
 
   .light {
     fill: rgb(255, 234, 130);
-    filter: drop-shadow(0 0 6px rgb(255, 234, 130)) drop-shadow(0 0 15px #ffea82);
+  }
+
+  .shadow {
+    fill: rgb(250, 239, 184);
+    filter: blur(10px);
   }
 }
 
 @keyframes glimmer {
  0% {
-  opacity: 0.5;
+  opacity: 0.2;
  }
  100% {
   opacity: 1;
