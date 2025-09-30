@@ -1,32 +1,28 @@
-package year2023;
-
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Day3 {
-    record Point(int x, int y) {}
+public class Day3_2 {
+    record Point(int x, int y) {
+    }
 
     public static void main(String[] args) throws IOException {
-
-        //Part one
-        List<String> lines = Utils.readLines(Path.of("src/year2023/files/03.txt"));
+        List<String> lines = Files.readAllLines(Paths.get(args[0]));
         Map<Point, String> numbers = new HashMap<>();
         List<Point> symbols = new ArrayList<>();
-
-        int sum = 0;
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
 
             for (int x = 0; x < line.length(); x++) {
-                String s = line.substring(x, x+1);
+                String s = line.substring(x, x + 1);
 
-                if (Utils.isNumeric(s)) {
+                if (isNumeric(s)) {
                     int end = findEnd(line, x);
                     numbers.put(new Point(x, y), line.substring(x, end + 1));
 
@@ -37,26 +33,8 @@ public class Day3 {
             }
         }
 
-        for (Map.Entry<Point, String> entrySet : numbers.entrySet()) {
-            Point point = entrySet.getKey();
-            String number = entrySet.getValue();
-
-            outer: for (int y = point.y - 1; y <= point.y + 1 ; y++) {
-                for (int x = point.x - 1; x <= point.x + number.length() ; x++) {
-                    if (symbols.contains(new Point(x, y))) {
-                        sum += Integer.parseInt(number);
-                        break outer;
-                    }
-                }
-            }
-        }
-
-        System.out.println(sum);
-
-
-        //Part two
         Map<Point, List<Integer>> gears = new HashMap<>();
-        sum = 0;
+        int sum = 0;
 
         symbols = symbols.stream()
                 .filter(point -> {
@@ -65,15 +43,14 @@ public class Day3 {
                 })
                 .collect(Collectors.toList());
 
-
         for (Map.Entry<Point, String> entrySet : numbers.entrySet()) {
             Point point = entrySet.getKey();
             String number = entrySet.getValue();
 
-            for (int y = point.y - 1; y <= point.y + 1 ; y++) {
-                for (int x = point.x - 1; x <= point.x + number.length() ; x++) {
+            for (int y = point.y - 1; y <= point.y + 1; y++) {
+                for (int x = point.x - 1; x <= point.x + number.length(); x++) {
                     if (symbols.contains(new Point(x, y))) {
-                        gears.computeIfAbsent(new Point(x, y), k -> new ArrayList<>()).add(Integer.parseInt(number));
+                        gears.computeIfAbsent(new Point(x, y), _ -> new ArrayList<>()).add(Integer.parseInt(number));
                     }
                 }
             }
@@ -81,7 +58,7 @@ public class Day3 {
 
         for (List<Integer> gearNumbers : gears.values()) {
             if (gearNumbers.size() > 1) {
-                sum += Utils.mul(gearNumbers);
+                sum += mul(gearNumbers);
             }
         }
 
@@ -89,10 +66,28 @@ public class Day3 {
     }
 
     private static int findEnd(String line, int x) {
-        if (x >= line.length() - 1 || !Utils.isNumeric(line.substring(x + 1, x + 2))) {
+        if (x >= line.length() - 1 || !isNumeric(line.substring(x + 1, x + 2))) {
             return x;
         }
 
         return findEnd(line, x + 1);
+    }
+
+    private static int mul(List<Integer> numbers) {
+        int result = 1;
+        for (int number : numbers) {
+            result *= number;
+        }
+
+        return result;
+    }
+
+    private static boolean isNumeric(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }

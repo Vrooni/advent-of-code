@@ -1,4 +1,3 @@
-package year2023;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -70,7 +69,7 @@ public class Utils {
             return null;
         }
 
-        return list.get(list.size()-1);
+        return list.get(list.size() - 1);
     }
 
     public static String replace(String s, int index, char c) {

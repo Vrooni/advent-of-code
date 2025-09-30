@@ -29,18 +29,17 @@ if (isset($_POST["input"])) {
   $_SESSION["text"] = $_POST["input"];
 }
 
-$text = $_SESSION["text"];
-$input = preg_split("/\r\n|\n|\r/", trim($text));
+$text = $_SESSION["text"] ?? "";
 
 $code_solution_language = $_SESSION["lang"] ?? $code_solutions[0] ?? "";
 $code_solution_part = $_SESSION["part"] ?? 1;
 
 if ($text) {
-  $solution_part_1 = get_solution($input, $selected_day, 1);
-  $solution_part_2 = get_solution($input, $selected_day, 2);
+  $solution_part_1 = get_solution($text, $selected_day, 1);
+  $solution_part_2 = get_solution($text, $selected_day, 2);
 }
 
-function get_solution($input, $day, $part)
+function get_solution($text, $day, $part)
 {
   global $path_to_php_code;
   global $path_to_java_code;
@@ -50,13 +49,18 @@ function get_solution($input, $day, $part)
   try {
     // first prio php
     if (file_exists($path_to_php_day)) {
+      $input = preg_split("/\r\n|\n|\r/", trim($text));
       return ["success", require($path_to_php_day)];
     }
 
     // second prio java
     elseif (file_exists($path_to_java_code . "/$java_class.class")) {
-      $args = implode(" ", $input);
-      $result = shell_exec("java -cp $path_to_java_code $java_class $args");
+      $input_file = tempnam(sys_get_temp_dir(), 'java_input_');
+      file_put_contents($input_file, $text);
+
+      $result = shell_exec("java -cp $path_to_java_code $java_class " . escapeshellarg($input_file) . " 2>&1");
+      unlink($input_file);
+
       if ($result) {
         return ["success", $result];
       } else {
@@ -70,8 +74,8 @@ function get_solution($input, $day, $part)
     }
   } catch (Throwable $e) {
     // TODO delete it
-    // return ["error", $e->getMessage()];
-    return ["error", "Invalid input"];
+    return ["error", $e->getMessage()];
+    // return ["error", "Invalid input"];
   }
 }
 ?>

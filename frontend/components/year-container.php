@@ -2,7 +2,7 @@
 $closed = "closed";
 $hidden = "hidden";
 
-if ($selected_year == $year) {
+if (isset($selected_year) && $selected_year == $year) {
   $closed = "";
   $hidden = "";
 }

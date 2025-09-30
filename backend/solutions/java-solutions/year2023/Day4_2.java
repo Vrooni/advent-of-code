@@ -1,20 +1,16 @@
-package year2023;
-
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-public class Day4 {
+public class Day4_2 {
 
     public static void main(String[] args) throws IOException {
-
-        //Part one
-        List<String> lines = Utils.readLines(Path.of("src/year2023/files/04.txt"));
-        Map<Integer, Integer> cards = new HashMap<>(); //cards with id and matches
+        List<String> lines = Files.readAllLines(Paths.get(args[0]));
+        Map<Integer, Integer> cards = new HashMap<>(); // cards with id and matches
         List<String> winningNumbers;
         int matches;
 
@@ -25,8 +21,7 @@ public class Day4 {
             int id = Integer.parseInt(line
                     .split(":")[0]
                     .replace("Card", "")
-                    .trim()
-            );
+                    .trim());
 
             line = line.substring(line.indexOf(":") + 1);
             String[] splittedLine = line.split("\\|");
@@ -48,17 +43,7 @@ public class Day4 {
             cards.put(id, matches);
         }
 
-        int sum = 0;
-
-        for (int value : cards.values()) {
-            sum += Math.pow(2, value - 1);
-        }
-
-        System.out.println(sum);
-
-
-        //Part two
-        Map<Integer, Integer> wonCards = new HashMap<>(); //won cards with id and times card has been won
+        Map<Integer, Integer> wonCards = new HashMap<>(); // won cards with id and times card has been won
 
         for (Map.Entry<Integer, Integer> entrySet : cards.entrySet()) {
             wonCards.put(entrySet.getKey(), 1);
@@ -73,6 +58,10 @@ public class Day4 {
             }
         }
 
-        System.out.println(Utils.sum(wonCards.values().stream().toList()));
+        System.out.println(sum(wonCards.values().stream().toList()));
+    }
+
+    private static int sum(List<Integer> numbers) {
+        return numbers.stream().mapToInt(a -> a).sum();
     }
 }
