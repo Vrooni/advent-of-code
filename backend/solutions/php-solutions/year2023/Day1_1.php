@@ -1,4 +1,7 @@
 <?php
+
+namespace Day1_1;
+
 $result = 0;
 
 foreach ($input as $line) {

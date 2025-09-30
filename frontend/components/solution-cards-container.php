@@ -50,7 +50,7 @@ function get_solution($text, $day, $part)
     // first prio php
     if (file_exists($path_to_php_day)) {
       $input = preg_split("/\r\n|\n|\r/", trim($text));
-      return ["success", require($path_to_php_day)];
+      return ["success", require_once($path_to_php_day)];
     }
 
     // second prio java

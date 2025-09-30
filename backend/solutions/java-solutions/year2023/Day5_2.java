@@ -1,17 +1,19 @@
-package year2023;
-
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
-public class Day5 {
-    record MapInformation(long source, long destination, long length) {}
-    record Range(long from, long to) {}
+public class Day5_2 {
+    record MapInformation(long source, long destination, long length) {
+    }
+
+    record Range(long from, long to) {
+    }
 
     public static void main(String[] args) throws IOException {
 
-        //Part one
-        List<String> lines = Utils.readLines(Path.of("src/year2023/files/05.txt"));
+        // Part one
+        List<String> lines = Files.readAllLines(Paths.get(args[0]));
         List<Long> seeds;
 
         long result = Long.MAX_VALUE;
@@ -37,22 +39,6 @@ public class Day5 {
         lines = extractMapInformation(lines, temperatureToHumidityMap);
         extractMapInformation(lines, humidityToLocationMap);
 
-        for (long seed : seeds) {
-            long soil = getOrDefault(seedToSoilMap, seed);
-            long fertilizer = getOrDefault(soilToFertilizerMap, soil);
-            long water = getOrDefault(fertilizerToWaterMap, fertilizer);
-            long light = getOrDefault(waterToLightMap, water);
-            long temperature = getOrDefault(lightToTemperatureMap, light);
-            long humidity = getOrDefault(temperatureToHumidityMap, temperature);
-            long location = getOrDefault(humidityToLocationMap, humidity);
-
-            result = Math.min(location, result);
-        }
-
-        System.out.println(result);
-
-
-        //Part two
         List<Range> seedRanges = new ArrayList<>();
         List<Range> soilRanges;
         List<Range> fertilizerRanges;
@@ -63,7 +49,7 @@ public class Day5 {
         List<Range> locationRanges;
 
         for (int i = 0; i < seeds.size(); i += 2) {
-            seedRanges.add(new Range(seeds.get(i), seeds.get(i) + seeds.get(i+1)));
+            seedRanges.add(new Range(seeds.get(i), seeds.get(i) + seeds.get(i + 1)));
         }
 
         soilRanges = mapRange(seedToSoilMap, seedRanges);
@@ -93,25 +79,13 @@ public class Day5 {
             map.add(new MapInformation(
                     Long.parseLong(splittedLine[1]),
                     Long.parseLong(splittedLine[0]),
-                    Long.parseLong(splittedLine[2])
-            ));
+                    Long.parseLong(splittedLine[2])));
 
             linesToDelete.add(line);
         }
 
         lines.removeAll(linesToDelete);
         return lines;
-    }
-
-    private static long getOrDefault(List<MapInformation> map, long key) {
-        for (MapInformation entry : map) {
-            if (key >= entry.source && key <= entry.source + entry.length) {
-                long offset = key - entry.source;
-                return entry.destination + offset;
-            }
-        }
-
-        return key;
     }
 
     private static List<Range> mapRange(List<MapInformation> map, List<Range> ranges) {
@@ -126,12 +100,12 @@ public class Day5 {
                 Range rangeBefore = new Range(range.from, interRange.from - 1);
                 Range rangeAfter = new Range(interRange.to + 1, range.to);
 
-                //no intersection found -> try next one
+                // no intersection found -> try next one
                 if (interRange.to - interRange.from <= 0) {
                     continue;
                 }
 
-                //intersection found -> map the range
+                // intersection found -> map the range
                 foundRange = true;
                 ranges.remove(range);
 
@@ -139,7 +113,7 @@ public class Day5 {
                 long destinationEnd = destinationStart + (interRange.to - interRange.from);
                 mappedRanges.add(new Range(destinationStart, destinationEnd));
 
-                //only add remaining ranges, if they're valid
+                // only add remaining ranges, if they're valid
                 if (rangeBefore.from < rangeBefore.to) {
                     ranges.add(rangeBefore);
                 }
@@ -148,7 +122,7 @@ public class Day5 {
                 }
             }
 
-            //no map for range -> range already mapped
+            // no map for range -> range already mapped
             if (!foundRange) {
                 ranges.remove(range);
                 mappedRanges.add(range);
@@ -161,7 +135,6 @@ public class Day5 {
     private static Range getIntersection(Range range, MapInformation entry) {
         return new Range(
                 Math.max(range.from, entry.source),
-                Math.min(range.to, entry.source + entry.length)
-        );
+                Math.min(range.to, entry.source + entry.length));
     }
 }

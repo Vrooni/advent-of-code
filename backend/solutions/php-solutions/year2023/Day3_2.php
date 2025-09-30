@@ -1,5 +1,7 @@
 <?php
 
+namespace Day3_2;
+
 class Number
 {
   public $value;
@@ -26,37 +28,6 @@ class Position
   }
 }
 
-//Part one
-$input = file("files/03.txt", FILE_IGNORE_NEW_LINES);
-$numbers = getNumbers($input);
-
-$part_numbers = array_filter($numbers, "is_surrounded_by_symbol");
-$part_numbers = array_map(function ($number) {
-  return $number->value;
-}, $part_numbers);
-
-echo array_sum($part_numbers) . "<br>";
-
-
-//Part two
-$numbers = get_numbers_by_index($numbers);
-$potential_gears = get_potiential_gears();
-
-$gears_numbers = array_map("get_gear_numbers", $potential_gears);
-$result = 0;
-
-foreach ($gears_numbers as $gear_numbers) {
-  if (sizeof($gear_numbers) === 2) {
-
-    $gear_numbers = array_map(function ($number) {
-      return (int) $number->value;
-    }, $gear_numbers);
-
-    $result += array_product($gear_numbers);
-  }
-}
-
-echo $result . "<br>";
 
 function getNumbers($input)
 {
@@ -87,33 +58,6 @@ function getNumbers($input)
   return $numbers;
 }
 
-function is_surrounded_by_symbol($number): bool
-{
-  global $input;
-
-  $start_x = $number->x - strlen($number->value);
-  $start_y = $number->y - 1;
-  $end_x = $number->x + 1;
-  $end_y = $number->y + 1;
-
-  $start_x = max($start_x, 0);
-  $start_y = max($start_y, 0);
-  $end_x = min($end_x, strlen($input[0]) - 1);
-  $end_y = min($end_y, sizeof($input) - 1);
-
-  for ($y = $start_y; $y <= $end_y; $y++) {
-    for ($x = $start_x; $x <= $end_x; $x++) {
-      $char = $input[$y][$x];
-
-      if (!is_numeric($char) && $char !== ".") {
-        return true;
-      }
-    }
-  }
-
-  return false;
-}
-
 function get_numbers_by_index($numbers)
 {
   $numbers_by_index = [];
@@ -129,9 +73,8 @@ function get_numbers_by_index($numbers)
   return $numbers_by_index;
 }
 
-function get_potiential_gears()
+function get_potiential_gears($input)
 {
-  global $input;
   $potential_gears = [];
 
   for ($y = 0; $y < sizeof($input); $y++) {
@@ -147,11 +90,8 @@ function get_potiential_gears()
   return $potential_gears;
 }
 
-function get_gear_numbers($potential_gear)
+function get_gear_numbers($potential_gear, $input, $numbers)
 {
-  global $input;
-  global $numbers;
-
   $start_x = max($potential_gear->x - 1, 0);
   $start_y = max($potential_gear->y - 1, 0);
   $end_x = min($potential_gear->x + 1, strlen($input[0]) - 1);
@@ -161,7 +101,7 @@ function get_gear_numbers($potential_gear)
 
   for ($x = $start_x; $x <= $end_x; $x++) {
     for ($y = $start_y; $y <= $end_y; $y++) {
-      $number = $numbers["$x;$y"];
+      $number = $numbers["$x;$y"] ?? 0;
 
       if ($number && !in_array($number, $gear_numbers, true)) {
         $gear_numbers[] = $number;
@@ -171,3 +111,26 @@ function get_gear_numbers($potential_gear)
 
   return $gear_numbers;
 }
+
+$numbers = getNumbers($input);
+$numbers = get_numbers_by_index($numbers);
+$potential_gears = get_potiential_gears($input);
+
+$gears_numbers = array_map(function ($number) use ($input, $numbers) {
+  return get_gear_numbers($number, $input, $numbers);
+}, $potential_gears);
+
+$result = 0;
+
+foreach ($gears_numbers as $gear_numbers) {
+  if (sizeof($gear_numbers) === 2) {
+
+    $gear_numbers = array_map(function ($number) {
+      return (int) $number->value;
+    }, $gear_numbers);
+
+    $result += array_product($gear_numbers);
+  }
+}
+
+return $result;

@@ -1,4 +1,7 @@
 <?php
+
+namespace Day1_2;
+
 $result = 0;
 $numbers_map = [
   "one" => 1,
