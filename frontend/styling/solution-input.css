@@ -2,7 +2,8 @@ body main {
   padding-top: 2rem;
   
   .sad-reindeer {
-    height: 30rem;
+    width: 30rem;
+    max-width: 80%;
   }
 
   .excuse {
