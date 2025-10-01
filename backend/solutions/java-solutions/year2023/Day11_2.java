@@ -1,36 +1,22 @@
-package year2023;
-
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class Day11 {
-    record Point(long x, long y) {}
+public class Day11_2 {
+    record Point(long x, long y) {
+    }
 
-    record Combination(Point g1, Point g2) {}
+    record Combination(Point g1, Point g2) {
+    }
 
     public static void main(String[] args) throws IOException {
-        //Part one
-        List<String> lines = Utils.readLines(Path.of("src/year2023/files/11.txt"));
+        List<String> lines = Files.readAllLines(Paths.get(args[0]));
         List<List<Character>> universe = readInput(lines);
-        List<Point> galaxies = getGalaxies(universe, 1);
+        List<Point> galaxies = getGalaxies(universe, 999999);
         List<Combination> combinations = getCombinations(galaxies);
 
         long result = 0;
-
-        for (Combination combination : combinations) {
-            result += Math.abs(combination.g1.x - combination.g2.x) + Math.abs(combination.g1.y - combination.g2.y);
-        }
-
-        System.out.println(result);
-
-
-        //Part two
-        galaxies = getGalaxies(universe, 999999);
-        combinations = getCombinations(galaxies);
-
-        result = 0;
 
         for (Combination combination : combinations) {
             result += Math.abs(combination.g1.x - combination.g2.x) + Math.abs(combination.g1.y - combination.g2.y);
@@ -93,7 +79,7 @@ public class Day11 {
         List<Combination> combinations = new ArrayList<>();
 
         for (int i = 0; i < galaxies.size(); i++) {
-            for (int j = i+1; j < galaxies.size(); j++) {
+            for (int j = i + 1; j < galaxies.size(); j++) {
                 combinations.add(new Combination(galaxies.get(i), galaxies.get(j)));
             }
         }

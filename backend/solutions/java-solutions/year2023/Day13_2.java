@@ -1,32 +1,13 @@
-package year2023;
-
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
-public class Day13 {
+public class Day13_2 {
 
     public static void main(String[] args) throws IOException {
-        //Part one
-        List<String> lines = Utils.readLines(Path.of("src/year2023/files/13.txt"));
+        List<String> lines = Files.readAllLines(Paths.get(args[0]));
         int result = 0;
-
-        while (!lines.isEmpty()) {
-            int index = lines.indexOf("");
-
-            List<String> subLines = lines.subList(0, index == -1 ? lines.size() : index);
-            result += 100 * getReflection(subLines, false, 0, 0);
-            result += getReflection(reverse(subLines), false, 0, 0);
-
-            lines = index == -1 ? new ArrayList<>() : lines.subList(index + 1, lines.size());
-        }
-
-        System.out.println(result);
-
-
-        //Part two
-        lines = Utils.readLines(Path.of("src/year2023/files/13.txt"));
-        result = 0;
 
         while (!lines.isEmpty()) {
             int index = lines.indexOf("");
@@ -60,7 +41,7 @@ public class Day13 {
 
     private static int getReflection(List<String> lines, boolean checkFlipped, int flippedIndex, int size) {
         for (int i = 1; i < lines.size(); i++) {
-            if (lines.get(i).equals(lines.get(i-1))) {
+            if (lines.get(i).equals(lines.get(i - 1))) {
                 boolean reflection = true;
 
                 for (int j = 1; i + j < lines.size() && i - 1 - j >= 0; j++) {
@@ -91,7 +72,7 @@ public class Day13 {
         for (int i = 0; i < subLines.size(); i++) {
             String subLine = subLines.get(i);
 
-            for (int j = i+1; j < subLines.size(); j++) {
+            for (int j = i + 1; j < subLines.size(); j++) {
                 List<Integer> indexesAtDifferences = new ArrayList<>();
 
                 for (int k = 0; k < subLine.toCharArray().length; k++) {
@@ -103,7 +84,8 @@ public class Day13 {
                 if (indexesAtDifferences.size() == 1) {
                     int idx = indexesAtDifferences.get(0);
                     char difference = subLine.charAt(idx);
-                    String flippedSubLine = subLine.substring(0, idx) + (difference == '#' ? '.' : '#') + subLine.substring(idx+1);
+                    String flippedSubLine = subLine.substring(0, idx) + (difference == '#' ? '.' : '#')
+                            + subLine.substring(idx + 1);
 
                     List<String> subLinesWithFlipped = new ArrayList<>(subLines);
                     subLinesWithFlipped.set(i, flippedSubLine);

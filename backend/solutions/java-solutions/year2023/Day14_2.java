@@ -1,26 +1,15 @@
-package year2023;
-
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day14 {
+public class Day14_2 {
     private static List<List<String>> history = new ArrayList<>();
     private static final int TIMES = 1000000000;
 
     public static void main(String[] args) throws IOException {
-        //Part one
-        List<String> lines = Utils.readLines(Path.of("src/year2023/files/14.txt"));
-        roll(lines);
-
-        int result = getResult(lines);
-        System.out.println(result);
-
-
-        //Part two
-        lines = Utils.readLines(Path.of("src/year2023/files/14.txt"));
-
+        List<String> lines = Files.readAllLines(Paths.get(args[0]));
         int cycleIndex = findCycle(lines);
 
         for (int i = 0; i < cycleIndex; i++) {
@@ -28,9 +17,9 @@ public class Day14 {
         }
 
         int endIndex = (TIMES - cycleIndex) % history.size() - 1;
-        endIndex = endIndex == -1 ? history.size() - 1 : endIndex; //Underflow
+        endIndex = endIndex == -1 ? history.size() - 1 : endIndex; // Underflow
 
-        result = getResult(history.get(endIndex));
+        int result = getResult(history.get(endIndex));
         System.out.println(result);
     }
 
@@ -42,12 +31,12 @@ public class Day14 {
                 if (lines.get(y).charAt(x) == 'O') {
                     for (int y2 = y - 1; y2 >= 0; y2--) {
                         if (lines.get(y2).charAt(x) != '.') {
-                            lines.set(y, Utils.replace(lines.get(y), x, '.'));
-                            lines.set(y2 + 1, Utils.replace(lines.get(y2 + 1), x, 'O'));
+                            lines.set(y, replace(lines.get(y), x, '.'));
+                            lines.set(y2 + 1, replace(lines.get(y2 + 1), x, 'O'));
                             break;
                         } else if (y2 == 0) {
-                            lines.set(y, Utils.replace(lines.get(y), x, '.'));
-                            lines.set(y2, Utils.replace(lines.get(y2), x, 'O'));
+                            lines.set(y, replace(lines.get(y), x, '.'));
+                            lines.set(y2, replace(lines.get(y2), x, 'O'));
                             break;
                         }
                     }
@@ -55,12 +44,13 @@ public class Day14 {
             }
         }
     }
+
     private static List<String> turn(List<String> lines) {
         List<String> turnedLines = new ArrayList<>();
 
         for (int x = 0; x < lines.get(0).length(); x++) {
             StringBuilder s = new StringBuilder();
-            for (int y = lines.size() - 1; y >= 0 ; y--) {
+            for (int y = lines.size() - 1; y >= 0; y--) {
                 s.append(lines.get(y).charAt(x));
             }
 
@@ -76,7 +66,7 @@ public class Day14 {
                 return history.indexOf(lines);
             }
 
-            //ignore 0 step
+            // ignore 0 step
             if (i != 0) {
                 history.add(new ArrayList<>(lines));
             }
@@ -99,5 +89,9 @@ public class Day14 {
         }
 
         return result;
+    }
+
+    private static String replace(String s, int index, char c) {
+        return s.substring(0, index) + c + s.substring(index + 1);
     }
 }

@@ -11,8 +11,6 @@ public class Day5_2 {
     }
 
     public static void main(String[] args) throws IOException {
-
-        // Part one
         List<String> lines = Files.readAllLines(Paths.get(args[0]));
         List<Long> seeds;
 

@@ -1,25 +1,24 @@
-package year2023;
-
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Day10 {
-    record Point(int x, int y) {}
-    record Pipe(Point p1, Point p2) {}
+public class Day10_2 {
+    record Point(int x, int y) {
+    }
+
+    record Pipe(Point p1, Point p2) {
+    }
 
     public static void main(String[] args) throws IOException {
-        //Part one
-        List<String> lines = Utils.readLines(Path.of("src/year2023/files/10.txt"));
+        List<String> lines = Files.readAllLines(Paths.get(args[0]));
         Map<Point, Pipe> pipes = readInput(lines);
         Point start = getStart(lines);
         Point end = getEnd(pipes, start);
 
-
-        //Part two
         List<Point> visited = getHistory(pipes, start, end);
         replaceStartWithPipe(lines, visited, start);
         List<List<Character>> map = getMap(lines, visited);
@@ -27,10 +26,10 @@ public class Day10 {
 
         int insideCount = 0;
 
-        for (int y = 0; y < map.size(); y+=2) {
-            for (int x = 0; x < map.get(0).size(); x+=2) {
-                if (map.get(y).subList(x, x+2).stream().allMatch(c -> c == 'I') &&
-                        map.get(y+1).subList(x, x+2).stream().allMatch(c -> c == 'I')) {
+        for (int y = 0; y < map.size(); y += 2) {
+            for (int x = 0; x < map.get(0).size(); x += 2) {
+                if (map.get(y).subList(x, x + 2).stream().allMatch(c -> c == 'I') &&
+                        map.get(y + 1).subList(x, x + 2).stream().allMatch(c -> c == 'I')) {
                     insideCount++;
                 }
             }
@@ -48,38 +47,38 @@ public class Day10 {
             for (int x = 0; x < line.length(); x++) {
                 switch (line.charAt(x)) {
                     case 'F' -> {
-                        Point p1 = new Point(x, y+1);
-                        Point p2 = new Point(x+1, y);
+                        Point p1 = new Point(x, y + 1);
+                        Point p2 = new Point(x + 1, y);
                         Point pOwn = new Point(x, y);
                         pipes.put(pOwn, new Pipe(p1, p2));
                     }
                     case '7' -> {
-                        Point p1 = new Point(x, y+1);
-                        Point p2 = new Point(x-1, y);
+                        Point p1 = new Point(x, y + 1);
+                        Point p2 = new Point(x - 1, y);
                         Point pOwn = new Point(x, y);
                         pipes.put(pOwn, new Pipe(p1, p2));
                     }
                     case 'L' -> {
-                        Point p1 = new Point(x, y-1);
-                        Point p2 = new Point(x+1, y);
+                        Point p1 = new Point(x, y - 1);
+                        Point p2 = new Point(x + 1, y);
                         Point pOwn = new Point(x, y);
                         pipes.put(pOwn, new Pipe(p1, p2));
                     }
                     case 'J' -> {
-                        Point p1 = new Point(x, y-1);
-                        Point p2 = new Point(x-1, y);
+                        Point p1 = new Point(x, y - 1);
+                        Point p2 = new Point(x - 1, y);
                         Point pOwn = new Point(x, y);
                         pipes.put(pOwn, new Pipe(p1, p2));
                     }
                     case '|' -> {
-                        Point p1 = new Point(x, y+1);
-                        Point p2 = new Point(x, y-1);
+                        Point p1 = new Point(x, y + 1);
+                        Point p2 = new Point(x, y - 1);
                         Point pOwn = new Point(x, y);
                         pipes.put(pOwn, new Pipe(p1, p2));
                     }
                     case '-' -> {
-                        Point p1 = new Point(x+1, y);
-                        Point p2 = new Point(x-1, y);
+                        Point p1 = new Point(x + 1, y);
+                        Point p2 = new Point(x - 1, y);
                         Point pOwn = new Point(x, y);
                         pipes.put(pOwn, new Pipe(p1, p2));
                     }
@@ -105,7 +104,6 @@ public class Day10 {
     private static Point getEnd(Map<Point, Pipe> pipes, Point start) {
         List<Point> currentPositions = new ArrayList<>();
         List<Point> previousPositions = new ArrayList<>();
-        int steps = 1;
 
         for (Map.Entry<Point, Pipe> entry : pipes.entrySet()) {
             if (entry.getValue().p1.equals(start) || entry.getValue().p2.equals(start)) {
@@ -129,12 +127,9 @@ public class Day10 {
                 }
             }
 
-            steps++;
-
             List<Point> previous = new ArrayList<>();
             for (Point currentPosition : currentPositions) {
                 if (previous.contains(currentPosition)) {
-                    System.out.println(steps);
                     return currentPosition;
                 }
                 previous.add(currentPosition);
@@ -182,7 +177,7 @@ public class Day10 {
     }
 
     private static List<List<Character>> getMap(List<String> lines, List<Point> visited) {
-        List<List<Character>> map = initMap(lines.size()*2, lines.get(0).length()*2);
+        List<List<Character>> map = initMap(lines.size() * 2, lines.get(0).length() * 2);
 
         for (int y = 0; y < lines.size(); y++) {
             for (int x = 0; x < lines.get(0).length(); x++) {
@@ -191,73 +186,73 @@ public class Day10 {
 
                     switch (lines.get(y).charAt(x)) {
                         case 'L' -> {
-                            List<Character> line = map.get(y*2);
-                            line.set(x*2, '|');
-                            line.set(x*2 + 1, '.');
+                            List<Character> line = map.get(y * 2);
+                            line.set(x * 2, '|');
+                            line.set(x * 2 + 1, '.');
 
-                            line = map.get(y*2 + 1);
-                            line.set(x*2, '_');
-                            line.set(x*2 + 1, '_');
+                            line = map.get(y * 2 + 1);
+                            line.set(x * 2, '_');
+                            line.set(x * 2 + 1, '_');
                         }
 
                         case 'J' -> {
-                            List<Character> line = map.get(y*2);
-                            line.set(x*2, '.');
-                            line.set(x*2 + 1, '|');
+                            List<Character> line = map.get(y * 2);
+                            line.set(x * 2, '.');
+                            line.set(x * 2 + 1, '|');
 
-                            line = map.get(y*2 + 1);
-                            line.set(x*2, '_');
-                            line.set(x*2 + 1, '_');
+                            line = map.get(y * 2 + 1);
+                            line.set(x * 2, '_');
+                            line.set(x * 2 + 1, '_');
                         }
 
                         case '7' -> {
-                            List<Character> line = map.get(y*2);
-                            line.set(x*2, '_');
-                            line.set(x*2 + 1, '_');
+                            List<Character> line = map.get(y * 2);
+                            line.set(x * 2, '_');
+                            line.set(x * 2 + 1, '_');
 
-                            line = map.get(y*2 + 1);
-                            line.set(x*2, '.');
-                            line.set(x*2 + 1, '|');
+                            line = map.get(y * 2 + 1);
+                            line.set(x * 2, '.');
+                            line.set(x * 2 + 1, '|');
                         }
 
                         case 'F' -> {
-                            List<Character> line = map.get(y*2);
-                            line.set(x*2, '_');
-                            line.set(x*2 + 1, '_');
+                            List<Character> line = map.get(y * 2);
+                            line.set(x * 2, '_');
+                            line.set(x * 2 + 1, '_');
 
-                            line = map.get(y*2 + 1);
-                            line.set(x*2, '|');
-                            line.set(x*2 + 1, '.');
+                            line = map.get(y * 2 + 1);
+                            line.set(x * 2, '|');
+                            line.set(x * 2 + 1, '.');
                         }
 
                         case '-' -> {
-                            List<Character> line = map.get(y*2);
-                            line.set(x*2, '_');
-                            line.set(x*2 + 1, '_');
+                            List<Character> line = map.get(y * 2);
+                            line.set(x * 2, '_');
+                            line.set(x * 2 + 1, '_');
 
-                            line = map.get(y*2 + 1);
-                            line.set(x*2, '.');
-                            line.set(x*2 + 1, '.');
+                            line = map.get(y * 2 + 1);
+                            line.set(x * 2, '.');
+                            line.set(x * 2 + 1, '.');
                         }
 
                         case '|' -> {
-                            List<Character> line = map.get(y*2);
-                            line.set(x*2, '|');
-                            line.set(x*2 + 1, '.');
+                            List<Character> line = map.get(y * 2);
+                            line.set(x * 2, '|');
+                            line.set(x * 2 + 1, '.');
 
-                            line = map.get(y*2 + 1);
-                            line.set(x*2, '|');
-                            line.set(x*2 + 1, '.');
+                            line = map.get(y * 2 + 1);
+                            line.set(x * 2, '|');
+                            line.set(x * 2 + 1, '.');
                         }
                     }
                 } else {
-                    List<Character> line = map.get(y*2);
-                    line.set(x*2, '.');
-                    line.set(x*2 + 1, '.');
+                    List<Character> line = map.get(y * 2);
+                    line.set(x * 2, '.');
+                    line.set(x * 2 + 1, '.');
 
-                    line = map.get(y*2 + 1);
-                    line.set(x*2, '.');
-                    line.set(x*2 + 1, '.');
+                    line = map.get(y * 2 + 1);
+                    line.set(x * 2, '.');
+                    line.set(x * 2 + 1, '.');
                 }
             }
         }
@@ -267,10 +262,9 @@ public class Day10 {
 
     private static void replaceStartWithPipe(List<String> lines, List<Point> visited, Point start) {
         char startPipe = getStartPipe(
-                visited.get(visited.size()-3),
-                visited.get(visited.size()-4),
-                start
-        );
+                visited.get(visited.size() - 3),
+                visited.get(visited.size() - 4),
+                start);
 
         String lineWithStart = lines.get(start.y);
         lineWithStart = lineWithStart.substring(0, start.x) + startPipe + lineWithStart.substring(start.x + 1);
@@ -284,15 +278,15 @@ public class Day10 {
         if (p1Cardinal == 'N' && p2Cardinal == 'S' || p1Cardinal == 'S' && p2Cardinal == 'N') {
             return '|';
         } else if (p1Cardinal == 'O' && p2Cardinal == 'W' || p1Cardinal == 'W' && p2Cardinal == 'O') {
-            return  '-';
+            return '-';
         } else if (p1Cardinal == 'O' && p2Cardinal == 'S' || p1Cardinal == 'S' && p2Cardinal == 'O') {
-            return  'F';
+            return 'F';
         } else if (p1Cardinal == 'W' && p2Cardinal == 'S' || p1Cardinal == 'S' && p2Cardinal == 'W') {
-            return  '7';
+            return '7';
         } else if (p1Cardinal == 'W' && p2Cardinal == 'N' || p1Cardinal == 'N' && p2Cardinal == 'W') {
-            return  'J';
+            return 'J';
         } else if (p1Cardinal == 'O' && p2Cardinal == 'N' || p1Cardinal == 'N' && p2Cardinal == 'O') {
-            return  'L';
+            return 'L';
         }
 
         return 'E';
@@ -326,7 +320,7 @@ public class Day10 {
         }
     }
 
-    private static List<List<Character>>  initMap(int height, int width) {
+    private static List<List<Character>> initMap(int height, int width) {
         List<List<Character>> map = new ArrayList<>();
 
         for (int i = 0; i < height; i++) {

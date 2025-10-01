@@ -1,18 +1,16 @@
-package year2023;
-
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
-public class Day7 {
-    record HandInformation(String cards, int points, int type) {}
+public class Day7_1 {
+    record HandInformation(String cards, int points, int type) {
+    }
 
     private static final Map<Character, Integer> ranking = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
-
-        //Part one
-        List<String> lines = Utils.readLines(Path.of("src/year2023/files/07.txt"));
+        List<String> lines = Files.readAllLines(Paths.get(args[0]));
         List<HandInformation> hands = new ArrayList<>();
         initRankingMap();
         int sum = 0;
@@ -27,28 +25,7 @@ public class Day7 {
         rankHands(hands);
 
         for (int i = 0; i < hands.size(); i++) {
-            sum += (i+1) * hands.get(i).points;
-        }
-
-        System.out.println(sum);
-
-
-        //Part two
-        hands = new ArrayList<>();
-        ranking.put('J', 0);
-        sum = 0;
-
-        for (String line : lines) {
-            String cards = line.split(" ")[0];
-            int points = Integer.parseInt(line.split(" ")[1]);
-
-            hands.add(new HandInformation(cards, points, getType2(cards)));
-        }
-
-        rankHands(hands);
-
-        for (int i = 0; i < hands.size(); i++) {
-            sum += (i+1) * hands.get(i).points;
+            sum += (i + 1) * hands.get(i).points;
         }
 
         System.out.println(sum);
@@ -114,39 +91,6 @@ public class Day7 {
         } else if (numberCountMap.size() == 3) {
             return 3;
         } else if (numberCountMap.containsValue(2)) {
-            return 2;
-        } else {
-            return 1;
-        }
-    }
-
-    private static int getType2(String cards) {
-        cards.replaceAll("J", "");
-
-        Map<Character, Integer> numberCountMap = new HashMap<>();
-        for (char card : cards.toCharArray()) {
-            numberCountMap.put(card, numberCountMap.getOrDefault(card, 0) + 1);
-        }
-
-        Integer jValue = numberCountMap.remove('J');
-        int jCount = jValue == null ? 0 : jValue;
-        int maxSequence = jCount + Utils.max(numberCountMap.values());
-
-        if (maxSequence == 5) {
-            return 7;
-        } else if (maxSequence == 4) {
-            return 6;
-        } else if (maxSequence == 3) {
-
-            if (numberCountMap.size() == 2) {
-                return 5;
-            } else {
-                return 4;
-            }
-
-        } else if (numberCountMap.size() == 3) {
-            return 3;
-        } else if (maxSequence == 2) {
             return 2;
         } else {
             return 1;
