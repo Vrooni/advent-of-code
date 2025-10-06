@@ -7,6 +7,7 @@ const MAX_GREEN = 13;
 const MAX_BLUE = 14;
 
 $result = 0;
+$input =  json_decode($_POST["input"]);
 
 foreach ($input as $game) {
   $game = str_replace(" ", "", $game);
@@ -41,4 +42,4 @@ foreach ($input as $game) {
   $result += $reds * $greens * $blues;
 }
 
-return $result;
+echo $result;

@@ -112,6 +112,8 @@ function get_gear_numbers($potential_gear, $input, $numbers)
   return $gear_numbers;
 }
 
+$input =  json_decode($_POST["input"]);
+
 $numbers = getNumbers($input);
 $numbers = get_numbers_by_index($numbers);
 $potential_gears = get_potiential_gears($input);
@@ -133,4 +135,4 @@ foreach ($gears_numbers as $gear_numbers) {
   }
 }
 
-return $result;
+echo $result;

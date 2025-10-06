@@ -1,11 +1,14 @@
 <?php
-session_start();
-$selected_day = $_SESSION["selected_day"];
-$selected_year = $_SESSION["selected_year"];
+require_once("../utils/utils.php");
 
-$part = $_GET["part"] ?? "1";
-$_SESSION["part"] = $part;
+if (isset($_GET["year"]) && isset($_GET["day"]) && isset($_GET["part"])) {
+  $selected_year = $_GET["year"];
+  $selected_day = $_GET["day"];
+  $part = $_GET["part"];
 
-$path_to_java_code = "../../backend/solutions/java-solutions/year$selected_year/Day$selected_day" . "_$part.java";
+  $code = Utils::get_java_solution($selected_year, $selected_day, $part);
+}
 ?>
-<code class="language-java"><?php require($path_to_java_code); ?></code>
+<code class="language-java"><?php echo $code ?
+                              htmlspecialchars($code) :
+                              "404 - Solution not found"; ?></code>

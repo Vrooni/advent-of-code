@@ -15,6 +15,7 @@ $numbers_map = [
   "nine" => 9
 ];
 
+$input = json_decode($_POST["input"]);
 foreach ($input as $line) {
   $numbers = [];
 
@@ -43,4 +44,4 @@ foreach ($input as $line) {
   $result += $number;
 }
 
-return $result;
+echo $result;

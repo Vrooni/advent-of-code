@@ -70,7 +70,7 @@ function is_surrounded_by_symbol($number, $input): bool
   return false;
 }
 
-
+$input =  json_decode($_POST["input"]);
 $numbers = getNumbers($input);
 
 $part_numbers = array_filter($numbers, function ($number) use ($input) {
@@ -81,4 +81,4 @@ $part_numbers = array_map(function ($number) {
   return $number->value;
 }, $part_numbers);
 
-return array_sum($part_numbers);
+echo array_sum($part_numbers);

@@ -2,6 +2,7 @@
 
 namespace Day1_1;
 
+$input = json_decode($_POST["input"]);
 $result = 0;
 
 foreach ($input as $line) {
@@ -18,4 +19,4 @@ foreach ($input as $line) {
   $result += $number;
 }
 
-return $result;
+echo $result;

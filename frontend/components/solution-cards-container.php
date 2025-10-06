@@ -1,133 +1,49 @@
 <?php
-$text = "";
-$solution_part_1 = null;
-$solution_part_2 = null;
-$path_to_php_code = "../../backend/solutions/php-solutions/year$selected_year";
-$path_to_java_code = "../../backend/solutions/java-solutions/year$selected_year";
-
-$php_code_exists =
-  file_exists("$path_to_php_code/Day$selected_day" . "_1.php") &&
-  file_exists("$path_to_php_code/Day$selected_day" . "_2.php");
-$java_code_exists =
-  file_exists("$path_to_java_code/Day$selected_day" . "_1.java") &&
-  file_exists("$path_to_java_code/Day$selected_day" . "_2.java");
-
 $code_solutions = [];
-if ($php_code_exists) {
+if ($solution_php_exists) {
   $code_solutions[] = "PHP";
 }
 
-if ($java_code_exists) {
+if ($solution_java_exists) {
   $code_solutions[] = "Java";
 }
 
-if (isset($_POST["lang"])) {
-  $_SESSION["lang"] = $_POST["lang"];
-}
-
-if (isset($_POST["input"])) {
-  $_SESSION["text"] = $_POST["input"];
-}
-
-$text = $_SESSION["text"] ?? "";
-
-$code_solution_language = $_SESSION["lang"] ?? $code_solutions[0] ?? "";
-$code_solution_part = $_SESSION["part"] ?? 1;
-
-if ($text) {
-  $solution_part_1 = get_solution($text, $selected_day, 1);
-  $solution_part_2 = get_solution($text, $selected_day, 2);
-}
-
-function get_solution($text, $day, $part)
-{
-  global $path_to_php_code;
-  global $path_to_java_code;
-  $path_to_php_day = "$path_to_php_code/Day$day" . "_$part.php";
-  $java_class = "Day$day" . "_$part";
-
-  try {
-    // first prio php
-    if (file_exists($path_to_php_day)) {
-      $input = preg_split("/\r\n|\n|\r/", trim($text));
-      return ["success", require_once($path_to_php_day)];
-    }
-
-    // second prio java
-    elseif (file_exists($path_to_java_code . "/$java_class.class")) {
-      $input_file = tempnam(sys_get_temp_dir(), 'java_input_');
-      file_put_contents($input_file, $text);
-
-      $result = shell_exec("java -cp $path_to_java_code $java_class " . escapeshellarg($input_file) . " 2>&1");
-      unlink($input_file);
-
-      if ($result) {
-        return ["success", $result];
-      } else {
-        return ["error", "Invalid input"];
-      }
-    }
-
-    // no solution to run
-    else {
-      return ["error", "500 - Solution file not found"];
-    }
-  } catch (Throwable $e) {
-    // TODO delete it
-    return ["error", $e->getMessage()];
-    // return ["error", "Invalid input"];
-  }
-}
+$code_solution_language = $code_solutions[0] ?? "";
 ?>
 
 <div class="cards-container">
   <div class="card-container">
-    <form id="input-form" method="post">
-      <p>Enter your input:</p>
-      <textarea class="textarea" name="input"><?php echo $text; ?></textarea>
+    <p>Enter your input:</p>
+    <textarea id="input" class="textarea"></textarea>
 
-      <div class="buttons">
-        <a class="btn secondary"
-          href="<?php echo "https://adventofcode.com/$selected_year/day/$selected_day" ?>"
-          target="_blank"
-          rel="noopener noreferrer">
-          Problem
-        </a>
-        <button class="btn primary" type="submit">Solve</button>
-      </div>
-    </form>
+    <div class="buttons">
+      <a class="btn secondary"
+        href="<?php echo "https://adventofcode.com/$selected_year/day/$selected_day" ?>"
+        target="_blank"
+        rel="noopener noreferrer">
+        Problem
+      </a>
+      <button class="btn primary" onclick="solve(<?php echo $selected_year; ?>, <?php echo $selected_day; ?>)">Solve</button>
+    </div>
   </div>
 
   <div class="output-container">
-    <div onclick="copyToClipboard(this)" class="card-container output <?php echo isset($solution_part_1) ? $solution_part_1[0] : ""; ?> ">
+    <div onclick="copyToClipboard(this)" class="card-container output">
       <p class="part-title">Part 1</p>
-      <p class="part-solution">
-        <?php
-        if (isset($solution_part_1)) {
-          echo $solution_part_1[1];
-        } else {
-          echo "Answers will ";
-        }
-        ?>
+      <p id="solution-1" class="part-solution">
+        Answers will
       </p>
       <span class=" info">Copy</span>
     </div>
 
-    <div onclick="copyToClipboard(this)" class="card-container output <?php echo isset($solution_part_2) ? $solution_part_2[0] : ""; ?> ">
+    <div onclick="copyToClipboard(this)" class="card-container output">
       <p class="part-title">Part 2</p>
-      <p class="part-solution"">
-        <?php
-        if (isset($solution_part_2)) {
-          echo $solution_part_2[1];
-        } else {
-          echo " be shown here";
-        }
-        ?>
+      <p id="solution-2" class="part-solution"">
+        be shown here
       </p>
       <span class=" info">Copy</span>
     </div>
   </div>
-
 </div>
 
 <div class="solution-container">
@@ -135,8 +51,8 @@ function get_solution($text, $day, $part)
   <?php
   if (sizeof($code_solutions) > 1) {
   ?>
-    <form class="lang-container" action="solution.php" method="post">
-      <button class="prev" type="submit" name="lang" value="<?php echo $code_solution_language === "PHP" ? "Java" : "PHP" ?>">
+    <div class="lang-container">
+      <button class="prev" onclick="toggleLanguage(); selectPart(<?php echo $selected_year; ?>, <?php echo $selected_day; ?>)">
         <i class="fa-solid fa-chevron-left"></i>
       </button>
 
@@ -144,10 +60,10 @@ function get_solution($text, $day, $part)
         <?php echo $code_solution_language; ?>
       </h3>
 
-      <button class="next" type="submit" name="lang" value="<?php echo $code_solution_language === "PHP" ? "Java" : "PHP" ?>">
-        <i class="fa-solid fa-chevron-right"></i>
+      <button class="next" onclick="toggleLanguage(); selectPart(<?php echo $selected_year; ?>, <?php echo $selected_day; ?>)">
+        <i class=" fa-solid fa-chevron-right"></i>
       </button>
-    </form>
+    </div>
   <?php
   } else {
   ?>
@@ -161,8 +77,8 @@ function get_solution($text, $day, $part)
   ?>
 
   <form class="tag-container">
-    <img class="one-tag <?php echo $code_solution_part == 1 ? "active" : ""; ?>" src="../resources/tag-one.svg" alt="one tag" onclick=selectPartOne(this)>
-    <img class="two-tag <?php echo $code_solution_part == 2 ? "active" : ""; ?>" src="../resources/tag-two.svg" alt="two tag" onclick=selectPartTwo(this)>
+    <img class="one-tag active" src="frontend/resources/tag-one.svg" alt="one tag" onclick="selectPartOne(this, <?php echo $selected_year; ?>, <?php echo $selected_day; ?> )">
+    <img class="two-tag" src="frontend/resources/tag-two.svg" alt="two tag" onclick="selectPartTwo(this, <?php echo $selected_year; ?>, <?php echo $selected_day; ?> )">
   </form>
 
   <pre id="code-container" class="textarea">

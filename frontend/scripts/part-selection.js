@@ -1,19 +1,12 @@
-window.addEventListener("scroll", () => {
-  localStorage.setItem("scrollPos", window.scrollY);
-});
-
 window.addEventListener("DOMContentLoaded", () => {
-  const scrollPos = localStorage.getItem("scrollPos");
-  if (scrollPos !== null) {
-    window.scrollTo(0, parseInt(scrollPos, 10));
-  }
-
+  const year = document.getElementById("year").textContent.trim();
+  const day = document.getElementById("day").textContent.trim();
   const part = document.querySelector(".tag-container .active");
   if (part) {
     if (part.classList.contains("one-tag")) {
-      selectPartOne(part);
+      selectPartOne(part, year, day);
     } else if (part.classList.contains("two-tag")) {
-      selectPartTwo(part);
+      selectPartTwo(part, );
     }
   }
 });
@@ -25,8 +18,18 @@ function stopAnimations(el) {
   }
 }
 
-function selectPartOne(element) {
-  getPartSolution(1);
+function selectPart(year, day) {
+  console.log(day);
+  const element = document.querySelector("img.active");
+  if (element.classList.contains("one-tag")) {
+    selectPartOne(element, year, day);
+  } else {
+    selectPartTwo(element, year, day);
+  }
+}
+
+function selectPartOne(element, year, day) {
+  getPartSolution(year, day, 1);
 
   element.classList.add("active");
 
@@ -49,8 +52,8 @@ function selectPartOne(element) {
   );
 }
 
-function selectPartTwo(element) {
-  getPartSolution(2);
+function selectPartTwo(element, year, day) {
+  getPartSolution(year, day, 2);
 
   element.classList.add("active");
 
@@ -73,26 +76,26 @@ function selectPartTwo(element) {
   );
 }
 
-function getPartSolution(part) {
-  const codeLang = document.getElementById("code-lang").innerText;
+function getPartSolution(year, day, part) {
+  const codeLang = document.getElementById("code-lang").textContent.trim();
 
   if (codeLang === "PHP") {
-    fetch("../components/solution-php.php?part=" + part)
+    fetch("frontend/components/solution-php.php?year=" + year + "&day=" + day + "&part=" + part)
       .then(response => response.text())
       .then(data => {
         document.getElementById("code-container").innerHTML = data;
         Prism.highlightAll();
       })
       .catch(error => console.error("Error while getting code solution:", error));
-  } 
+  }
 
   else if (codeLang === "Java") {
-    fetch("../components/solution-java.php?part=" + part)
+    fetch("frontend/components/solution-java.php?year=" + year + "&day=" + day + "&part=" + part)
       .then(response => response.text())
       .then(data => {
         document.getElementById("code-container").innerHTML = data;
         Prism.highlightAll();
       })
-      .catch(error => console.error("Error while getting code solution:", error));
+      .catch(error => console.error("Error while getting code solution: ", error));
   }
 }
