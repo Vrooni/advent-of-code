@@ -91,6 +91,9 @@ body {
   border-radius: 0.3rem;
 }
 
+.hide {
+  display: none;
+}
 
 .lights {
   z-index: -1;

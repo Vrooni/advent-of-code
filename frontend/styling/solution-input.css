@@ -47,17 +47,45 @@ body main {
         cursor: copy;
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0rem;
         width: 100%;
         border: 1px solid transparent;
         position: relative;
 
         .part-title {
           color: var(--green);
+          margin-bottom: 0.5rem;
         }
 
         p {
           font-size: 1rem;
+        }
+
+        .part-solution {
+          position: relative;
+        }
+
+        .loading {
+          .sleigh {
+            color: #c0b9ff80;
+            font-size: 1.8rem;
+            animation: fly-sleigh 4s 2.5s linear infinite;
+          }
+
+          .reindeer {
+            height: 20px;
+            transform: rotateY(180deg);
+
+            &.one {
+              animation: fly 4s 2s linear infinite;
+            }
+            &.two {
+              animation: fly 4s 1s linear infinite;
+            }
+            &.three {
+              animation: fly 4s linear infinite;
+            }
+          }
         }
       }
 
@@ -100,5 +128,35 @@ body main {
         visibility: visible;
       }
     }
+  }
+}
+
+@keyframes fly {
+  0% {
+    transform: translateY(0) rotateY(180deg);
+  }
+  25% {
+    transform: translateY(-5px) rotateY(180deg);
+  }
+  75% {
+    transform: translateY(5px) rotateY(180deg);
+  }
+  100% {
+    transform: translateY(0) rotateY(180deg);
+  }
+}
+
+@keyframes fly-sleigh {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-5px);
+  }
+  75% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
