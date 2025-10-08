@@ -8,7 +8,7 @@ class Utils
 
   static function get_java_solution($year, $day, $part)
   {
-    $path_to_year = "../../backend/solutions/java-solutions/year$year";
+    $path_to_year = "backend/solutions/java-solutions/year$year";
     $path_to_code = "$path_to_year/Day$day" . "_$part.txt";
 
     if (file_exists($path_to_code)) {

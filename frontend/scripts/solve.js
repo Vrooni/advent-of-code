@@ -46,7 +46,7 @@ function solvePHP(year, day, part, input, element) {
       body: "input=" + encodeURIComponent(JSON.stringify(input))
   })
   .then(response => {
-    hideLoading();
+    hideLoading(part);
     return response.text();
   })
   .then(data => {
@@ -59,7 +59,7 @@ function solvePHP(year, day, part, input, element) {
     }
   })
   .catch(error => {
-    hideLoading();
+    hideLoading(part);
     showError(element, element.parentElement);
   });
 }
@@ -71,11 +71,11 @@ function solveJava(year, day, part, input, element) {
     body: input
   })
   .then(response => {
-    hideLoading();
+    hideLoading(part);
     return response.text();
   })
   .then(data => {
-    if (data.includes("error")) {
+    if (data.includes("Invalid")) {
       showError(element, element.parentElement);
     } else {
       element.innerHTML = data;
@@ -84,7 +84,7 @@ function solveJava(year, day, part, input, element) {
     }
   })
   .catch(error => {
-    hideLoading();
+    hideLoading(part);
     showError(element, element.parentElement);
   });
 }
@@ -96,19 +96,11 @@ function showError(solution, parent) {
 }
 
 function showLoading() {
-  document.querySelectorAll(".reindeer").forEach(reindeer => {
-    reindeer.classList.remove("hide");
-  });
-  document.querySelectorAll(".sleigh").forEach(sleigh => {
-    sleigh.classList.remove("hide");
+  document.querySelectorAll(".loading").forEach(element => {
+    element.classList.remove("hide");
   });
 }
 
-function hideLoading() {
-  document.querySelectorAll(".reindeer").forEach(reindeer => {
-    reindeer.classList.add("hide");
-  });
-  document.querySelectorAll(".sleigh").forEach(sleigh => {
-    sleigh.classList.add("hide");
-  });
+function hideLoading(part) {
+  document.querySelectorAll(".loading")[part-1].classList.add("hide");
 }

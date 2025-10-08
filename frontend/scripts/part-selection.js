@@ -19,7 +19,6 @@ function stopAnimations(el) {
 }
 
 function selectPart(year, day) {
-  console.log(day);
   const element = document.querySelector("img.active");
   if (element.classList.contains("one-tag")) {
     selectPartOne(element, year, day);
