@@ -32,11 +32,11 @@ $code_solution_language = $code_solutions[0] ?? "";
       <p class="part-title">Part 1</p>
       <p id="solution-1" class="part-solution">Answers will</p>
       <span class="info">Copy</span>
-      <div class="loading">
-        <i class="fa-solid fa-sleigh sleigh hide"></i>
-        <img class="reindeer one hide" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
-        <img class="reindeer two hide" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
-        <img class="reindeer three hide" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
+      <div class="loading hide">
+        <i class="fa-solid fa-sleigh sleigh"></i>
+        <img class="reindeer one" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
+        <img class="reindeer two" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
+        <img class="reindeer three" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
       </div>
     </div>
 
@@ -44,11 +44,11 @@ $code_solution_language = $code_solutions[0] ?? "";
       <p class="part-title">Part 2</p>
       <p id="solution-2" class="part-solution">be shown here</p>
       <span class="info">Copy</span>
-      <div class="loading">
-        <i class="fa-solid fa-sleigh sleigh hide"></i>
-        <img class="reindeer one hide" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
-        <img class="reindeer two hide" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
-        <img class="reindeer three hide" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
+      <div class="loading hide">
+        <i class="fa-solid fa-sleigh sleigh"></i>
+        <img class="reindeer one" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
+        <img class="reindeer two" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
+        <img class="reindeer three" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
       </div>
     </div>
   </div>

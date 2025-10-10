@@ -74,8 +74,8 @@ function solution_exists(&$solution_php_exists, &$solution_java_exists, $year, $
     file_exists("backend/solutions/php-solutions/year$year/Day" . $day . "_2.php");
 
   $solution_java_exists =
-    Utils::java_solution_exists($year, $day, 1) &&
-    Utils::java_solution_exists($year, $day, 1);
+    Utils::java_solution_exists($year, $day, 1, "backend/solutions/java-solutions") &&
+    Utils::java_solution_exists($year, $day, 2, "backend/solutions/java-solutions");
 }
 ?>
 

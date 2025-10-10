@@ -5,8 +5,8 @@ require_once "frontend/utils/utils.php";
 $solution_exists =
   file_exists("backend/solutions/php-solutions/year$year/Day" . $day . "_1.php") &&
   file_exists("backend/solutions/php-solutions/year$year/Day" . $day . "_2.php") ||
-  Utils::java_solution_exists($year, $day, 1) &&
-  Utils::java_solution_exists($year, $day, 2);
+  Utils::java_solution_exists($year, $day, 1, "backend/solutions/java-solutions") &&
+  Utils::java_solution_exists($year, $day, 2, "backend/solutions/java-solutions");
 ?>
 
 

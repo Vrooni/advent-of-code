@@ -1,14 +1,14 @@
 <?php
 class Utils
 {
-  static function java_solution_exists($year, $day, $part)
+  static function java_solution_exists($year, $day, $part, $path_to_solutions)
   {
-    return self::get_java_solution($year, $day, $part);
+    return self::get_java_solution($year, $day, $part, $path_to_solutions);
   }
 
-  static function get_java_solution($year, $day, $part)
+  static function get_java_solution($year, $day, $part, $path_to_solutions)
   {
-    $path_to_year = "backend/solutions/java-solutions/year$year";
+    $path_to_year = "$path_to_solutions/year$year";
     $path_to_code = "$path_to_year/Day$day" . "_$part.txt";
 
     if (file_exists($path_to_code)) {
