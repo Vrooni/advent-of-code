@@ -52,6 +52,10 @@ function selectPartOne(element, year, day) {
 }
 
 function selectPartTwo(element, year, day) {
+  if (day == 25) {
+    return;
+  }
+  
   getPartSolution(year, day, 2);
 
   element.classList.add("active");

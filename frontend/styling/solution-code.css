@@ -87,6 +87,14 @@ body main {
       .two-tag.active {
         transform: rotate(20deg);
       }
+
+      .disabled {
+        cursor: not-allowed;
+
+        &:hover {
+          transform: rotate(8deg);
+        }
+      }
     }
 
     h2 {

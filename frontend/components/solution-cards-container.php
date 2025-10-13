@@ -30,7 +30,7 @@ $code_solution_language = $code_solutions[0] ?? "";
   <div class="output-container">
     <div onclick="copyToClipboard(this)" class="card-container output">
       <p class="part-title">Part 1</p>
-      <p id="solution-1" class="part-solution">Answers will</p>
+      <p id="solution-1" class="part-solution"><?php echo $selected_day == 25 ? "Answer will be shown here" : "Answers will"; ?></p>
       <span class="info">Copy</span>
       <div class="loading hide">
         <i class="fa-solid fa-sleigh sleigh"></i>
@@ -40,17 +40,19 @@ $code_solution_language = $code_solutions[0] ?? "";
       </div>
     </div>
 
-    <div onclick="copyToClipboard(this)" class="card-container output">
-      <p class="part-title">Part 2</p>
-      <p id="solution-2" class="part-solution">be shown here</p>
-      <span class="info">Copy</span>
-      <div class="loading hide">
-        <i class="fa-solid fa-sleigh sleigh"></i>
-        <img class="reindeer one" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
-        <img class="reindeer two" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
-        <img class="reindeer three" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
+    <?php if ($selected_day != 25): ?>
+      <div onclick="copyToClipboard(this)" class="card-container output">
+        <p class="part-title">Part 2</p>
+        <p id="solution-2" class="part-solution">be shown here</p>
+        <span class="info">Copy</span>
+        <div class="loading hide">
+          <i class="fa-solid fa-sleigh sleigh"></i>
+          <img class="reindeer one" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
+          <img class="reindeer two" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
+          <img class="reindeer three" src="frontend/resources/fly_reindeer.svg" alt="flying reindeer">
+        </div>
       </div>
-    </div>
+    <?php endif; ?>
   </div>
 </div>
 
@@ -86,7 +88,7 @@ $code_solution_language = $code_solutions[0] ?? "";
 
   <form class="tag-container">
     <img class="one-tag active" src="frontend/resources/tag-one.svg" alt="one tag" onclick="selectPartOne(this, <?php echo $selected_year; ?>, <?php echo $selected_day; ?> )">
-    <img class="two-tag" src="frontend/resources/tag-two.svg" alt="two tag" onclick="selectPartTwo(this, <?php echo $selected_year; ?>, <?php echo $selected_day; ?> )">
+    <img class="two-tag <?php echo $selected_day == 25 ? "disabled" : "" ?>" src="frontend/resources/tag-two.svg" alt="two tag" onclick="selectPartTwo(this, <?php echo $selected_year; ?>, <?php echo $selected_day; ?> )">
   </form>
 
   <pre id="code-container" class="textarea">

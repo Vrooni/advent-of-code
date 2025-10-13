@@ -5,17 +5,22 @@ function solve(year, day) {
 
   if (document.getElementById("input").value.length === 0) {
     showError(solution1, solution1.parentElement);
-    showError(solution2, solution2.parentElement);
+    if (day != 25) { 
+      showError(solution2, solution2.parentElement);
+    }
     return;
   }
 
   // loading
   solution1.innerHTML = ""
-  solution2.innerHTML = ""
   solution1.parentElement.classList.remove("success");
   solution1.parentElement.classList.remove("error");
-  solution2.parentElement.classList.remove("success");
-  solution2.parentElement.classList.remove("error");
+
+  if (day != 25) {
+    solution2.innerHTML = ""
+    solution2.parentElement.classList.remove("success");
+    solution2.parentElement.classList.remove("error");
+  }
   showLoading();
 
   if (lang === "PHP") {
@@ -28,14 +33,18 @@ function solve(year, day) {
     }
 
     solvePHP(year, day, "1", input, solution1);
-    solvePHP(year, day, "2", input, solution2);
+    if (day != 25) {
+      solvePHP(year, day, "2", input, solution2);
+    }
   }
 
   if (lang === "Java") {
     const input = document.getElementById("input").value;
 
     solveJava(year, day, "1", input, solution1);
-    solveJava(year, day, "2", input, solution2);
+    if (day != 25) {
+      solveJava(year, day, "2", input, solution2);
+    }
   }
 }
 
