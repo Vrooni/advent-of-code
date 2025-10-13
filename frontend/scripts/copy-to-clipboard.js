@@ -3,7 +3,21 @@ function copyToClipboard(element) {
   const solution = element.querySelector(".part-solution")
   info.innerText = "Copied!";
   info.classList.add("green");
-  navigator.clipboard.writeText(solution.innerText)
+ 
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(solution.innerText);
+  } 
+  
+  // workaround for http
+  else {
+    const textArea = document.createElement("textarea");
+    textArea.value = solution.innerText;
+    document.body.appendChild(textArea);
+    textArea.focus({preventScroll: true});
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+  }
 
   setTimeout(
     function() {
