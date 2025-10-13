@@ -8,6 +8,10 @@ class Utils
 
   static function get_java_solution($year, $day, $part, $path_to_solutions)
   {
+    if ($day == 25 && $part == 2) {
+      return true;
+    }
+
     $path_to_year = "$path_to_solutions/year$year";
     $path_to_code = "$path_to_year/Day$day" . "_$part.txt";
 
