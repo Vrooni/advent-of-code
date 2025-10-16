@@ -65,6 +65,7 @@ function solvePHP(year, day, part, input, element) {
       element.innerHTML = data;
       element.parentElement.classList.add("success");
       element.parentElement.classList.remove("error");
+      adjustOutput(element);
     }
   })
   .catch(error => {
@@ -90,6 +91,8 @@ function solveJava(year, day, part, input, element) {
       element.innerHTML = data;
       element.parentElement.classList.add("success");
       element.parentElement.classList.remove("error");
+      adjustOutput(element);
+
     }
   })
   .catch(error => {
@@ -113,3 +116,23 @@ function showLoading() {
 function hideLoading(part) {
   document.querySelectorAll(".loading")[part-1].classList.add("hide");
 }
+
+function adjustOutput(element) {
+  const container = element.parentElement;
+  element.style.fontSize = "16px";
+
+  console.log(element.clientWidth);
+
+  let fontSize = 16;
+  while (element.clientWidth > container.clientWidth) {
+    fontSize -= 1;
+    element.style.fontSize = fontSize + "px";
+  }
+}
+
+function adjustOutputs() {
+  adjustOutput(document.getElementById("solution-1"));
+  adjustOutput(document.getElementById("solution-2"));
+}
+
+window.addEventListener('resize', adjustOutputs);

@@ -41,14 +41,14 @@ body main {
 
     .output-container {
       display: flex;
-      gap: 1rem;
-
+      justify-content: space-between;
+  
       .output {
         cursor: copy;
         display: flex;
         flex-direction: column;
         gap: 0rem;
-        width: 100%;
+        width: 49%;
         border: 1px solid transparent;
         position: relative;
 
@@ -63,6 +63,7 @@ body main {
 
         .part-solution {
           position: relative;
+          white-space: pre;
         }
 
         .loading {
@@ -87,6 +88,10 @@ body main {
             }
           }
         }
+      }
+
+      .full-width {
+        width: 100%;
       }
 
       .success {

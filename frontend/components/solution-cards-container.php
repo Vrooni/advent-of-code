@@ -28,7 +28,7 @@ $code_solution_language = $code_solutions[0] ?? "";
   </div>
 
   <div class="output-container">
-    <div onclick="copyToClipboard(this)" class="card-container output">
+    <div onclick="copyToClipboard(this)" class="card-container output <?php echo $selected_day == 25 ? "full-width" : "" ?>">
       <p class="part-title">Part 1</p>
       <p id="solution-1" class="part-solution"><?php echo $selected_day == 25 ? "Answer will be shown here" : "Answers will"; ?></p>
       <span class="info">Copy</span>
